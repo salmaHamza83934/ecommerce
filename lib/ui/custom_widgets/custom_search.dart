@@ -9,17 +9,14 @@ class CustomSearch extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(child: CustomTextField()),
+        const CustomTextField(),
         SizedBox(
-          width: 24.w,
+          width: 15.w,
         ),
-        InkWell(
-          onTap: () {},
-          child: ImageIcon(
-            AssetImage(MyAssets.shoppingCart),
-            size: 28.sp,
-            color: AppTheme.primaryColor,
-          ),
+        Image.asset(
+          MyAssets.shoppingCart,
+          height: 35.h,
+          width: 35.w,
         ),
       ],
     );
