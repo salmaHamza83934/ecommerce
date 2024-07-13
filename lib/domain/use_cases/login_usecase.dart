@@ -2,10 +2,10 @@ import 'package:dartz/dartz.dart';
 import 'package:ecommerce_app/data/api/base_error.dart';
 import 'package:ecommerce_app/data/model/response/RegisterResponse.dart';
 import 'package:ecommerce_app/domain/entities/auth_result_entity.dart';
-import 'package:ecommerce_app/domain/repository/repository/auth_repository.dart';
+import 'package:ecommerce_app/domain/repository/repository/auth_repository_contract.dart';
 
 class LoginUseCase{
-  AuthRepository authRepository;
+  AuthRepositoryContract authRepository;
 
   LoginUseCase(this.authRepository);
 
