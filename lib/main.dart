@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/core/theme/theme.dart';
 import 'package:ecommerce_app/ui/home_screen/home_screen_view.dart';
 import 'package:ecommerce_app/ui/login/login_view.dart';
 import 'package:ecommerce_app/ui/register/register_view.dart';
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context,child) {
         return MaterialApp(
+          theme: AppTheme.mainTheme,
           debugShowCheckedModeBanner: false,
           initialRoute: SplashScreen.routeName,
           routes: {
