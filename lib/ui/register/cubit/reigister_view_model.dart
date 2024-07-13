@@ -6,9 +6,9 @@ import '../../../domain/use_cases/login_usecase.dart';
 import '../../../domain/use_cases/register_usecase.dart';
 
 class RegisterScreenViewModel extends Cubit<RegisterStates> {
-  RegisterUseCase registerUseCase;
+  RegisterUseCase regiserUseCase;
 
-  RegisterScreenViewModel({required this.registerUseCase})
+  RegisterScreenViewModel({required this.regiserUseCase})
       : super(RegisterInitialState());
   var formKey = GlobalKey<FormState>();
   var usernameController = TextEditingController();
@@ -25,7 +25,7 @@ class RegisterScreenViewModel extends Cubit<RegisterStates> {
   void register() async{
     if (formKey.currentState?.validate() == true) {
       emit(RegisterLoadingState());
-      var either=await registerUseCase.invoke(usernameController.text, passwordController.text,
+      var either=await regiserUseCase.invoke(usernameController.text, passwordController.text,
           confirmPasswordController.text, emailController.text, mobileNumberController.text);
       either.fold((l) => emit(RegisterErrorState(errorMsg: l.errMsg)), (response) => emit(RegisterSuccessState(response: response)));
     }

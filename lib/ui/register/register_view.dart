@@ -16,7 +16,7 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
-  RegisterScreenViewModel viewModel =RegisterScreenViewModel(registerUseCase: injectRegisterUseCase());
+  RegisterScreenViewModel viewModel =RegisterScreenViewModel(regiserUseCase: injectRegisterUseCase());
   @override
   Widget build(BuildContext context) {
     return BlocListener<RegisterScreenViewModel,RegisterStates>(

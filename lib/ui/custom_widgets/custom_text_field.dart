@@ -7,31 +7,28 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 345.w,
-      height: 50.h,
-      child: TextField(
-        cursorColor: AppTheme.primaryColor,
-        decoration: InputDecoration(
-          hintText: 'What do you search for?',
-          hintStyle: TextStyle(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.normal,
-            color: const Color.fromRGBO(6, 0, 79, 0.6),
+    return TextField(
+      cursorColor: AppTheme.primaryColor,
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.all(15.h),
+        hintText: 'What do you search for?',
+        hintStyle: TextStyle(
+          fontSize: 14.sp,
+          fontWeight: FontWeight.normal,
+          color: const Color.fromRGBO(6, 0, 79, 0.6),
+        ),
+        prefixIcon: IconButton(
+          icon: Icon(
+            Icons.search,
+            size: 32.sp,
+            color: AppTheme.primaryColor.withOpacity(0.75),
           ),
-          prefixIcon: IconButton(
-            icon: Icon(
-              Icons.search,
-              size: 32.sp,
-              color: AppTheme.primaryColor.withOpacity(0.75),
-            ),
-            onPressed: () {},
-          ),
-          border: buildBaseBorder(),
-          enabledBorder: buildBaseBorder(),
-          focusedBorder: buildBaseBorder()!.copyWith(
-            borderSide: BorderSide(width: 2),
-          ),
+          onPressed: () {},
+        ),
+        border: buildBaseBorder(),
+        enabledBorder: buildBaseBorder(),
+        focusedBorder: buildBaseBorder()!.copyWith(
+          borderSide: BorderSide(width: 2),
         ),
       ),
     );

@@ -35,7 +35,6 @@ class _LoginViewState extends State<LoginView> {
       else if (state is LoginSuccessState) {
         DialogUtils.hideLoading(context);
         DialogUtils.showMessage(context, state.response.userEntity?.name ?? '');
-        Navigator.pushNamed(context, HomeView.routeName);
       }
     }, child: Scaffold(
       backgroundColor: Color(0xFF004182),
@@ -54,7 +53,7 @@ class _LoginViewState extends State<LoginView> {
                   style: Theme
                       .of(context)
                       .textTheme
-                      .bodyLarge!
+                      .titleLarge!
                       .copyWith(color: Colors.white)),
             ),
             Padding(
@@ -164,7 +163,7 @@ class _LoginViewState extends State<LoginView> {
                     style: Theme
                         .of(context)
                         .textTheme
-                        .bodyMedium!
+                        .bodyLarge!
                         .copyWith(color: Colors.white),
                     textAlign: TextAlign.center,
                   )),

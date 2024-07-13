@@ -40,9 +40,6 @@ dependencies:
   http: ^1.1.0
   dartz: ^0.10.1
   connectivity_plus: ^5.0.2
-  flutter_image_slideshow: ^0.1.6
-  carousel_slider: ^4.2.1
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
