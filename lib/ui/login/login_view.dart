@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/core/cach_helper/cach_helper.dart';
 import 'package:ecommerce_app/data/di.dart';
 import 'package:ecommerce_app/ui/home_screen/home_screen_view.dart';
 import 'package:ecommerce_app/ui/login/cubit/login_states.dart';
@@ -6,6 +7,7 @@ import 'package:ecommerce_app/ui/register/register_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../custom_widgets/custom_text_form_field.dart';
 import '../dialog_utils.dart';
@@ -34,8 +36,10 @@ class _LoginViewState extends State<LoginView> {
       }
       else if (state is LoginSuccessState) {
         DialogUtils.hideLoading(context);
-        DialogUtils.showMessage(context, state.response.userEntity?.name ?? '');
+        CacheHelper.saveData(key: 'token', value: state.response.token);
+        Future.delayed(Duration(seconds: 2),(){
         Navigator.pushNamed(context, HomeView.routeName);
+        });
       }
     }, child: Scaffold(
       backgroundColor: Color(0xFF004182),

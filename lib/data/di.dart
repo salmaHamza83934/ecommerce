@@ -9,6 +9,7 @@ import 'package:ecommerce_app/domain/repository/repository/auth_repository_contr
 import 'package:ecommerce_app/domain/repository/repository/home_repository_contract.dart';
 import 'package:ecommerce_app/domain/use_cases/get_brands_usecase.dart';
 import 'package:ecommerce_app/domain/use_cases/get_categories_usecase.dart';
+import 'package:ecommerce_app/domain/use_cases/get_products_usecase.dart';
 import 'package:ecommerce_app/domain/use_cases/login_usecase.dart';
 import 'package:ecommerce_app/domain/use_cases/register_usecase.dart';
 
@@ -31,6 +32,9 @@ GetCategoriesUseCase injectGetCategoriesUseCase(){
 }
 GetBrandsUseCase injectGetBrandsUseCase(){
   return GetBrandsUseCase(injectHomeRepository());
+}
+GetProductsUseCase injectGetProductsUseCase(){
+  return GetProductsUseCase(injectHomeRepository());
 }
 HomeRepositoryContract injectHomeRepository(){
   return HomeRepositoryImpl(injectHomeRemoteDataSource());

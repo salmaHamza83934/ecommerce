@@ -4,9 +4,16 @@ import 'package:ecommerce_app/ui/login/login_view.dart';
 import 'package:ecommerce_app/ui/register/register_view.dart';
 import 'package:ecommerce_app/ui/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
+import 'core/blocObserver/myBlocObserver.dart';
+import 'core/cach_helper/cach_helper.dart';
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await CacheHelper.init();
+  Bloc.observer = MyBlocObserver();
   runApp(MyApp());
 }
 
