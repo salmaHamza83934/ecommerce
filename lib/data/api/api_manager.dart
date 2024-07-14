@@ -8,9 +8,11 @@ import 'package:ecommerce_app/data/model/request/registerRequest.dart';
 import 'package:ecommerce_app/data/model/response/CategoryOrBrandsResponseDto.dart';
 import 'package:ecommerce_app/data/model/response/LoginResponse.dart';
 import 'package:ecommerce_app/data/model/response/RegisterResponse.dart';
+import 'package:ecommerce_app/domain/entities/ProductsResponseEntity.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/request/LoginRequest.dart';
+import '../model/response/ProductResponseDto.dart';
 
 class ApiManager {
   ApiManager._();
@@ -114,6 +116,24 @@ class ApiManager {
     }
   }
 
+  Future<Either<BaseError, ProductResponseDto>> getProducts() async {
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.productsApi);
+      var response = await http.get(url);
+      var productResponse =
+      ProductResponseDto.fromJson(jsonDecode(response.body));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return Right(productResponse);
+      } else {
+        return Left(BaseError(
+            errMsg: productResponse.message??''));
+      }
+    } else {
+      return Left(BaseError(errMsg: 'Check Internet Connection'));
+    }
+  }
 
 
 }

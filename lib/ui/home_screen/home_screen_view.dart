@@ -2,6 +2,7 @@ import 'package:ecommerce_app/data/di.dart';
 import 'package:ecommerce_app/ui/custom_widgets/custom_bottom_navigation_bar.dart';
 import 'package:ecommerce_app/ui/home_screen/cubit/home_screen_states.dart';
 import 'package:ecommerce_app/ui/home_screen/cubit/home_screen_view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,6 +20,7 @@ class HomeView extends StatelessWidget {
         bloc: viewModel,
         builder: (context, state) {
           return Scaffold(
+            backgroundColor: Colors.white,
               bottomNavigationBar: buildCustomNavigationBar(
                 context: context,
                 selectedIndex: viewModel.selectedIndex,
@@ -27,35 +29,28 @@ class HomeView extends StatelessWidget {
                 },
               ),
               body: SafeArea(
-                  child: SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.w),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              Image.asset(
-                                MyAssets.logo,
-                                height: 22.h,
-                                width: 66.w,
-                              ),
-                              SizedBox(
-                                height: 18.h,
-                              ),
-                              CustomSearch(),
-                              SizedBox(
-                                height: 16.h,
-                              ),
-                              Column(
-                                children: [
-                                  viewModel.tabs[viewModel.selectedIndex],
-                                ],
-                              ),
-                            ])),
-                  )));
+                  child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Image.asset(
+                              MyAssets.logo,
+                              height: 22.h,
+                              width: 66.w,
+                            ),
+                            SizedBox(
+                              height: 18.h,
+                            ),
+                            CustomSearch(),
+                            SizedBox(
+                              height: 16.h,
+                            ),
+                            Expanded(child: viewModel.tabs[viewModel.selectedIndex]),
+                          ]))));
         },
         listener: (context, state) {});
   }
