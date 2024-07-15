@@ -5,6 +5,17 @@ import 'package:google_fonts/google_fonts.dart';
 class AppTheme{
   static const primaryColor=Color(0xFF004182);
   static ThemeData mainTheme=ThemeData(
+    appBarTheme: AppBarTheme(
+      centerTitle: true,
+      titleTextStyle: GoogleFonts.poppins(
+        fontSize: 22.sp,
+        fontWeight: FontWeight.w600,
+        color: primaryColor,
+      ),
+      iconTheme: IconThemeData(
+        color: primaryColor,
+      )
+    ),
     primaryColor: primaryColor,
     textTheme: TextTheme(
       titleLarge: GoogleFonts.poppins(

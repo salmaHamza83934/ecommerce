@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/core/asset_data/assets_img.dart';
 import 'package:ecommerce_app/core/theme/Colors.dart';
 import 'package:ecommerce_app/data/di.dart';
+import 'package:ecommerce_app/ui/product_details/product_details_view.dart';
 import 'package:ecommerce_app/ui/tabs/products_tab/cubit/produts_tab_states.dart';
 import 'package:ecommerce_app/ui/tabs/products_tab/cubit/produts_tab_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -38,74 +39,79 @@ class ProductListTab extends StatelessWidget {
           ),
           scrollDirection: Axis.vertical,
           itemBuilder: (context, index) {
-            return Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16.r),
-                  border: Border.all(color: Colors.grey)),
-              child: Column(children: [
-                Container(
-                  height: 160.h,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16.r),
-                      image: DecorationImage(
-                          image: NetworkImage(
-                              viewModel.products[index].images![0]),
-                          fit: BoxFit.cover)),
-                ),
-                Stack(
-                  alignment: Alignment.bottomRight,
-                  children: [
-                    Container(
-                      //height: 100.h,
-                      width: 180.w,
-                      padding: EdgeInsets.symmetric(horizontal: 8.w),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
+            return InkWell(
+              onTap: (){
+                Navigator.pushNamed(context, ProductDetailsView.routeName,arguments: viewModel.products[index]);
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16.r),
+                    border: Border.all(color: Colors.grey)),
+                child: Column(children: [
+                  Container(
+                    height: 160.h,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16.r),
+                        image: DecorationImage(
+                            image: NetworkImage(
+                                viewModel.products[index].images![0]),
+                            fit: BoxFit.cover)),
+                  ),
+                  Stack(
+                    alignment: Alignment.bottomRight,
+                    children: [
+                      Container(
+                        //height: 100.h,
+                        width: 180.w,
+                        padding: EdgeInsets.symmetric(horizontal: 8.w),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              viewModel.products[index].title ?? '',
+                              style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(color: AppColors.textColor, fontWeight:FontWeight.w500,fontSize: 16.sp),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              "EGP  ${viewModel.products[index].price.toString()}",
+                              style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(color: AppColors.textColor, fontWeight:FontWeight.w500,fontSize: 14.sp),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            SizedBox(height: 3.h,),
+                            Row(
+                              children: [
+                                Text(
+                                  "Rating (${viewModel.products[index].ratingsAverage.toString()})",
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .bodySmall!
+                                      .copyWith(color: AppColors.textColor, fontWeight:FontWeight.w500,fontSize: 14.sp),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                SizedBox(width: 3.h,),
+                                Icon(Icons.star,color: Colors.yellow,size: 20,),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            viewModel.products[index].title ?? '',
-                            style: Theme
-                                .of(context)
-                                .textTheme
-                                .bodySmall!
-                                .copyWith(color: AppColors.textColor, fontWeight:FontWeight.w500,fontSize: 16.sp),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            "EGP  ${viewModel.products[index].price.toString()}",
-                            style: Theme
-                                .of(context)
-                                .textTheme
-                                .bodySmall!
-                                .copyWith(color: AppColors.textColor, fontWeight:FontWeight.w500,fontSize: 14.sp),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          SizedBox(height: 3.h,),
-                          Row(
-                            children: [
-                              Text(
-                                "Rating (${viewModel.products[index].ratingsAverage.toString()})",
-                                style: Theme
-                                    .of(context)
-                                    .textTheme
-                                    .bodySmall!
-                                    .copyWith(color: AppColors.textColor, fontWeight:FontWeight.w500,fontSize: 14.sp),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              SizedBox(width: 3.h,),
-                              Icon(Icons.star,color: Colors.yellow,size: 20,),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Icon(Icons.add_circle,color: Theme.of(context).primaryColor,size: 35,)
-                  ],
-                ),
-              ]),
+                      Icon(Icons.add_circle,color: Theme.of(context).primaryColor,size: 35,)
+                    ],
+                  ),
+                ]),
+              ),
             );
           },
           itemCount: viewModel.products.length,
