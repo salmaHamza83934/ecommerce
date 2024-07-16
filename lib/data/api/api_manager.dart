@@ -2,10 +2,13 @@ import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
+import 'package:ecommerce_app/core/cach_helper/cach_helper.dart';
 import 'package:ecommerce_app/data/api/api_constants.dart';
 import 'package:ecommerce_app/data/api/base_error.dart';
 import 'package:ecommerce_app/data/model/request/registerRequest.dart';
+import 'package:ecommerce_app/data/model/response/AddToCartResponseDto.dart';
 import 'package:ecommerce_app/data/model/response/CategoryOrBrandsResponseDto.dart';
+import 'package:ecommerce_app/data/model/response/GetCartResponseDto.dart';
 import 'package:ecommerce_app/data/model/response/LoginResponse.dart';
 import 'package:ecommerce_app/data/model/response/RegisterResponse.dart';
 import 'package:ecommerce_app/domain/entities/ProductsResponseEntity.dart';
@@ -134,6 +137,96 @@ class ApiManager {
       return Left(BaseError(errMsg: 'Check Internet Connection'));
     }
   }
+
+  Future<Either<BaseError, AddToCartResponseDto>> addToCart(String productId) async {
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.addToCartApi);
+      var response = await http.post(url,body: {
+        "productId":productId,
+      },headers: {
+        'token':CacheHelper.getData(key: 'token'),
+      });
+      var addToCartResponse =
+      AddToCartResponseDto.fromJson(jsonDecode(response.body));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return Right(addToCartResponse);
+      } else {
+        return Left(BaseError(
+            errMsg: addToCartResponse.message??''));
+      }
+    } else {
+      return Left(BaseError(errMsg: 'Check Internet Connection'));
+    }
+  }
+
+  Future<Either<BaseError, GetCartResponseDto>> getCartItems() async {
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.addToCartApi);
+      var response = await http.get(url,headers: {
+        'token':CacheHelper.getData(key: 'token'),
+      });
+      var getCartResponseDto =
+      GetCartResponseDto.fromJson(jsonDecode(response.body));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return Right(getCartResponseDto);
+      } else {
+        return Left(BaseError(
+            errMsg: getCartResponseDto.status??''));
+      }
+    } else {
+      return Left(BaseError(errMsg: 'Check Internet Connection'));
+    }
+  }
+
+  Future<Either<BaseError, GetCartResponseDto>> deleteCartItems(String productId) async {
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      Uri url = Uri.https(ApiConstants.baseUrl, "${ApiConstants.addToCartApi}/$productId");
+      var response = await http.delete(url,headers: {
+        'token':CacheHelper.getData(key: 'token'),
+      });
+      var deleteCartResponseDto =
+      GetCartResponseDto.fromJson(jsonDecode(response.body));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return Right(deleteCartResponseDto);
+      } else {
+        return Left(BaseError(
+            errMsg: deleteCartResponseDto.status??''));
+      }
+    } else {
+      return Left(BaseError(errMsg: 'Check Internet Connection'));
+    }
+  }
+
+  Future<Either<BaseError, GetCartResponseDto>> updateCountCart(String productId,int count) async {
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      Uri url = Uri.https(ApiConstants.baseUrl, "${ApiConstants.addToCartApi}/$productId");
+      var response = await http.put(url,body: {
+        'count':count.toString()
+      },headers: {
+        'token':CacheHelper.getData(key: 'token'),
+      });
+      var updateCartResponseDto =
+      GetCartResponseDto.fromJson(jsonDecode(response.body));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return Right(updateCartResponseDto);
+      } else {
+        return Left(BaseError(
+            errMsg: updateCartResponseDto.status??''));
+      }
+    } else {
+      return Left(BaseError(errMsg: 'Check Internet Connection'));
+    }
+  }
+
+
 
 
 }
