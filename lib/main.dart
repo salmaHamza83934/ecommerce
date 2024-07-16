@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/core/theme/theme.dart';
+import 'package:ecommerce_app/ui/cart_screen/cart_screen.dart';
 import 'package:ecommerce_app/ui/home_screen/home_screen_view.dart';
 import 'package:ecommerce_app/ui/login/login_view.dart';
 import 'package:ecommerce_app/ui/product_details/product_details_view.dart';
@@ -35,7 +36,9 @@ class MyApp extends StatelessWidget {
             LoginView.routeName: (context) => LoginView(),
             RegisterView.routeName: (context) => RegisterView(),
             HomeView.routeName:(context)=>HomeView(),
-            ProductDetailsView.routeName:(context)=>ProductDetailsView()
+            ProductDetailsView.routeName:(context)=>ProductDetailsView(),
+            CartScreen.routeName:(context)=>CartScreen(),
+
           },
         );
       }
