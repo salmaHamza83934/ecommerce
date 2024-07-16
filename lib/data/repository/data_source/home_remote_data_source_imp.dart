@@ -49,4 +49,24 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource{
       return Right(r);
     });
   }
+
+  @override
+  Future<Either<BaseError, ProductsResponseEntity>> getProductByBrandId(String brandId) async{
+    var either= await apiManager.getProductByBrandId(brandId);
+    return either.fold((l) {
+      return Left(BaseError(errMsg: l.errMsg));
+    }, (r){
+      return Right(r);
+    });
+  }
+
+  @override
+  Future<Either<BaseError, ProductsResponseEntity>> getProductByCategoryId(String categoryId) async{
+    var either= await apiManager.getProductByCategoryId(categoryId);
+    return either.fold((l) {
+      return Left(BaseError(errMsg: l.errMsg));
+    }, (r){
+      return Right(r);
+    });
+  }
 }

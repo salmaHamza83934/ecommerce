@@ -8,6 +8,8 @@ import 'package:ecommerce_app/ui/home_screen/cubit/home_screen_states.dart';
 import 'package:ecommerce_app/ui/home_screen/cubit/home_screen_view_model.dart';
 import 'package:ecommerce_app/ui/tabs/home_tab/cubit/home_tab_states.dart';
 import 'package:ecommerce_app/ui/tabs/home_tab/cubit/home_tab_view_model.dart';
+import 'package:ecommerce_app/ui/tabs/home_tab/products_by_brand_screen.dart';
+import 'package:ecommerce_app/ui/tabs/home_tab/products_by_category_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -18,7 +20,9 @@ import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 class HomeTab extends StatelessWidget {
   HomeTabViewModel viewModel = HomeTabViewModel(
       getBrandsUseCase: injectGetBrandsUseCase(),
-      getCategoriesUseCase: injectGetCategoriesUseCase());
+      getCategoriesUseCase: injectGetCategoriesUseCase(),
+      getBrandProductUseCase: injectGetBrandProductUseCase(),
+      getCategoryProductUseCase: injectGetCategoryProductUseCase());
 
   @override
   Widget build(BuildContext context) {
@@ -78,31 +82,35 @@ class HomeTab extends StatelessWidget {
                             const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2),
                         itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              Expanded(
-                                flex: 7,
-                                child: CircleAvatar(
-                                        radius: 50.r,
-                                        backgroundImage: NetworkImage(viewModel
-                                                .categoryEntity[index].image ??
+                          return InkWell(onTap: (){
+                            Navigator.pushNamed(context, ProductsByCategoryScreen.routeName,arguments: viewModel.categoryEntity[index].id);
+                          },
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  flex: 7,
+                                  child: CircleAvatar(
+                                    radius: 50.r,
+                                    backgroundImage: NetworkImage(
+                                        viewModel.categoryEntity[index].image ??
                                             ''),
-                                      ),
-                              ),
-                              Expanded(
-                                flex: 3,
-                                child: Text(
-                                  viewModel.categoryEntity[index].name ?? "",
-                                  style: theme.textTheme.bodySmall!.copyWith(
-                                    color: AppColors.textColor,
-                                    fontWeight: FontWeight.w500,
-                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
                                 ),
-                              )
-                            ],
+                                Expanded(
+                                  flex: 3,
+                                  child: Text(
+                                    viewModel.categoryEntity[index].name ?? "",
+                                    style: theme.textTheme.bodySmall!.copyWith(
+                                      color: AppColors.textColor,
+                                      fontWeight: FontWeight.w500,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                  ),
+                                )
+                              ],
+                            ),
                           );
                         },
                         itemCount: viewModel.categoryEntity.length,
@@ -135,31 +143,36 @@ class HomeTab extends StatelessWidget {
                         physics: BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              Container(
-                                height: 130.h,
-                                width: 130.w,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: NetworkImage(viewModel
-                                                .brandsEntity[index].image ??
-                                            ''),
-                                        fit: BoxFit.contain),
-                                    borderRadius: BorderRadius.circular(16.r),
-                                    border: Border.all(width: 1)),
-                              ),
-                              Text(
-                                viewModel.brandsEntity[index].name ?? "",
-                                style: theme.textTheme.bodySmall!.copyWith(
-                                  color: AppColors.textColor,
-                                  fontWeight: FontWeight.w500,
-                                  overflow: TextOverflow.ellipsis,
+                          return InkWell(
+                            onTap: (){
+                              Navigator.pushNamed(context, ProductsByBrandScreen.routeName,arguments: viewModel.brandsEntity[index].id);
+                          },
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 130.h,
+                                  width: 130.w,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: NetworkImage(viewModel
+                                                  .brandsEntity[index].image ??
+                                              ''),
+                                          fit: BoxFit.contain),
+                                      borderRadius: BorderRadius.circular(16.r),
+                                      border: Border.all(width: 1)),
                                 ),
-                                textAlign: TextAlign.center,
-                                maxLines: 2,
-                              )
-                            ],
+                                Text(
+                                  viewModel.brandsEntity[index].name ?? "",
+                                  style: theme.textTheme.bodySmall!.copyWith(
+                                    color: AppColors.textColor,
+                                    fontWeight: FontWeight.w500,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                )
+                              ],
+                            ),
                           );
                         },
                         itemCount: viewModel.brandsEntity.length,
