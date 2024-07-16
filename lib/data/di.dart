@@ -14,6 +14,7 @@ import 'package:ecommerce_app/domain/use_cases/add_to_cart_usecase.dart';
 import 'package:ecommerce_app/domain/use_cases/get_brands_usecase.dart';
 import 'package:ecommerce_app/domain/use_cases/get_cart_use_case.dart';
 import 'package:ecommerce_app/domain/use_cases/get_categories_usecase.dart';
+import 'package:ecommerce_app/domain/use_cases/get_category_product_use_case.dart';
 import 'package:ecommerce_app/domain/use_cases/get_products_usecase.dart';
 import 'package:ecommerce_app/domain/use_cases/login_usecase.dart';
 import 'package:ecommerce_app/domain/use_cases/register_usecase.dart';
@@ -21,6 +22,7 @@ import 'package:ecommerce_app/domain/use_cases/update_count_cart_use_case.dart';
 
 import '../domain/repository/data_source/cart_remote_data_source.dart';
 import '../domain/use_cases/delete_cart_item_use_case.dart';
+import '../domain/use_cases/get_brand_product_use_case.dart';
 
 RegisterUseCase injectRegisterUseCase(){
   return RegisterUseCase(injectAuthRepository());
@@ -69,4 +71,10 @@ DeleteCartItemUseCase injectDeleteCartItemUseCase(){
 }
 UpdateCountCartUseCase injectUpdateCountCartUseCase(){
   return UpdateCountCartUseCase(injectCartRepositoryContract());
+}
+GetCategoryProductUseCase injectGetCategoryProductUseCase(){
+  return GetCategoryProductUseCase(injectHomeRepository());
+}
+GetBrandProductUseCase injectGetBrandProductUseCase(){
+  return GetBrandProductUseCase(injectHomeRepository());
 }
