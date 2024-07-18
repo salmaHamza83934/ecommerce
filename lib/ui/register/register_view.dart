@@ -1,9 +1,11 @@
 import 'package:ecommerce_app/data/di.dart';
 import 'package:ecommerce_app/ui/dialog_utils.dart';
+import 'package:ecommerce_app/ui/login/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../core/cach_helper/cach_helper.dart';
 import '../custom_widgets/custom_text_form_field.dart';
 import 'cubit/register_states.dart';
 import 'cubit/reigister_view_model.dart';
@@ -31,6 +33,12 @@ class _RegisterViewState extends State<RegisterView> {
           else if(state is RegisterSuccessState){
             DialogUtils.hideLoading(context);
             DialogUtils.showMessage(context, state.response.userEntity?.name??'');
+            CacheHelper.saveData(key: 'name', value: state.response.userEntity?.name);
+            CacheHelper.saveData(key: 'email', value: state.response.userEntity?.email);
+            CacheHelper.saveData(key: 'phone', value: viewModel.mobileNumberController.text);
+            Future.delayed(Duration(seconds: 2),(){
+              Navigator.pushNamed(context, LoginView.routeName);
+            });
           }
     },
     child: Scaffold(
