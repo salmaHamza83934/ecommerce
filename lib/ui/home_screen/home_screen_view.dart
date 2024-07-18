@@ -45,7 +45,7 @@ class HomeView extends StatelessWidget {
                             SizedBox(
                               height: 18.h,
                             ),
-                            CustomSearch(),
+                            viewModel.selectedIndex==3?const SizedBox():CustomSearch(),
                             SizedBox(
                               height: 16.h,
                             ),

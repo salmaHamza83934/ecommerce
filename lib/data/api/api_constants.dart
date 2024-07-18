@@ -7,4 +7,5 @@ class ApiConstants{
   static const String brandsApi='/api/v1/brands';
   static const String productsApi='/api/v1/products';
   static const String addToCartApi='/api/v1/cart';
+  static const String addToWishlistApi='/api/v1/wishlist';
 }

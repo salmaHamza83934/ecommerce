@@ -4,26 +4,35 @@ import 'package:ecommerce_app/data/di.dart';
 import 'package:ecommerce_app/ui/product_details/product_details_view.dart';
 import 'package:ecommerce_app/ui/tabs/products_tab/cubit/produts_tab_states.dart';
 import 'package:ecommerce_app/ui/tabs/products_tab/cubit/produts_tab_view_model.dart';
+import 'package:ecommerce_app/ui/tabs/products_tab/widgets/product_item_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ProductListTab extends StatelessWidget {
+class ProductListTab extends StatefulWidget {
+  @override
+  State<ProductListTab> createState() => _ProductListTabState();
+}
+
+class _ProductListTabState extends State<ProductListTab> {
   ProductsTabViewModel viewModel = ProductsTabViewModel(
+      addToWishlistUseCase: injectAddToWishlistUseCase(),
       getProductsUseCase: injectGetProductsUseCase(),
-      addToCartUseCase: injectAddToCartUseCase());
+      addToCartUseCase: injectAddToCartUseCase(),
+    removeFromWishlistUseCase: injectRemoveFromWishlistUseCase(),
+    getWishlistUseCase: injectGetWishlistUseCase()
+  );
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return BlocProvider<ProductsTabViewModel>(
       create: (context) => viewModel,
       child: BlocBuilder<ProductsTabViewModel, ProductsTabStates>(
-        bloc: viewModel..getAllProducts(),
+        bloc: viewModel..getAllProducts()..getWishlist(),
         builder: (context, state) {
-          return state is AllProductsLoadingState
+          return state is AllProductsLoadingState || state is GetWishlistLoadingState
               ? Center(
                   child: CircularProgressIndicator(
                     color: Theme.of(context).primaryColor,
@@ -40,105 +49,23 @@ class ProductListTab extends StatelessWidget {
                   ),
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
+                    final isFavourite = viewModel.favouriteProductIds.contains(viewModel.products[index].id??'');
+
                     return InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(
-                            context, ProductDetailsView.routeName,
-                            arguments: viewModel.products[index]);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16.r),
-                            border: Border.all(color: Colors.grey)),
-                        child: Column(children: [
-                          Container(
-                            height: 160.h,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16.r),
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                        viewModel.products[index].images![0]),
-                                    fit: BoxFit.cover)),
-                          ),
-                          Stack(
-                            alignment: Alignment.bottomRight,
-                            children: [
-                              Container(
-                                //height: 100.h,
-                                width: 180.w,
-                                padding: EdgeInsets.symmetric(horizontal: 8.w),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      viewModel.products[index].title ?? '',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall!
-                                          .copyWith(
-                                              color: AppColors.textColor,
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 16.sp),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    Text(
-                                      "EGP  ${viewModel.products[index].price.toString()}",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall!
-                                          .copyWith(
-                                              color: AppColors.textColor,
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 14.sp),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    SizedBox(
-                                      height: 3.h,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "Rating (${viewModel.products[index].ratingsAverage.toString()})",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall!
-                                              .copyWith(
-                                                  color: AppColors.textColor,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 14.sp),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        SizedBox(
-                                          width: 3.h,
-                                        ),
-                                        Icon(
-                                          Icons.star,
-                                          color: Colors.yellow,
-                                          size: 20,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              GestureDetector(
-                                  onTap: () {
-                                    viewModel.addToCart(
-                                        viewModel.products[index].id!);
-                                  },
-                                  child: Icon(
-                                    Icons.add_circle,
-                                    color: Theme.of(context).primaryColor,
-                                    size: 35,
-                                  ))
-                            ],
-                          ),
-                        ]),
-                      ),
-                    );
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, ProductDetailsView.routeName,
+                              arguments: viewModel.products[index]);
+                        },
+                        child: ProductItemWidget(
+                          product: viewModel.products[index],
+                          addToCart:(){ viewModel
+                              .addToCart(viewModel.products[index].id ?? '');},
+                          addToWishlist: (){
+                            viewModel
+                                .addToWishlist(viewModel.products[index].id??'',);
+                          }, isFavourite: isFavourite,
+                        ));
                   },
                   itemCount: viewModel.products.length,
                 );
