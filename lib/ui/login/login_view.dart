@@ -37,6 +37,8 @@ class _LoginViewState extends State<LoginView> {
       else if (state is LoginSuccessState) {
         DialogUtils.hideLoading(context);
         CacheHelper.saveData(key: 'token', value: state.response.token);
+        CacheHelper.saveData(key: 'name', value: state.response.userEntity?.name);
+        CacheHelper.saveData(key: 'email', value: state.response.userEntity?.email);
         Future.delayed(Duration(seconds: 2),(){
         Navigator.pushNamed(context, HomeView.routeName);
         });
