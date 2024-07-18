@@ -54,6 +54,7 @@ class WishlistTab extends StatelessWidget {
                                     children: [
                                       Container(
                                           width: 110.w,
+                                          height: 120.h,
                                           decoration: BoxDecoration(
                                             border: Border.all(
                                                 color: Colors.grey.shade300),
@@ -63,7 +64,24 @@ class WishlistTab extends StatelessWidget {
                                           child: Image.network(viewModel
                                                   .favoriteProducts[index]
                                                   .imageCover ??
-                                              '')),
+                                              '',loadingBuilder: (context, child, loadingProgress) {
+                                            if (loadingProgress == null) {
+                                              return child;
+                                            } else {
+                                              return Center(
+                                                child: CircularProgressIndicator(color: AppColors.primaryColor,),
+                                              );
+                                            }
+                                          },
+                                            errorBuilder: (context, error, stackTrace) {
+                                              return Center(
+                                                child: Icon(
+                                                  Icons.error,
+                                                  color: Colors.red,
+                                                  size: 50.w,
+                                                ),
+                                              );
+                                            },)),
                                       Padding(
                                         padding: EdgeInsets.all(8.r),
                                         child: Column(

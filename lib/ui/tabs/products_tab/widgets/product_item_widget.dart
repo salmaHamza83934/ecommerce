@@ -31,10 +31,35 @@ class ProductItemWidget extends StatelessWidget {
             Container(
               height: 160.h,
               decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16.r)
+              ),
+              child: ClipRRect(
                 borderRadius: BorderRadius.circular(16.r),
-                image: DecorationImage(
-                  image: NetworkImage(product.images![0]),
+                child: Image.network(
+                  product.images![0],
                   fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: 160.h,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.primaryColor,
+                        ),
+                      );
+                    }
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return Center(
+                      child: Icon(
+                        Icons.error,
+                        color: Colors.red,
+                        size: 50.w,
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
@@ -53,19 +78,19 @@ class ProductItemWidget extends StatelessWidget {
                       Text(
                         product.title ?? '',
                         style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: AppColors.textColor,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16.sp,
-                        ),
+                              color: AppColors.textColor,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16.sp,
+                            ),
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
                         "EGP ${product.price.toString()}",
                         style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: AppColors.textColor,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.sp,
-                        ),
+                              color: AppColors.textColor,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14.sp,
+                            ),
                         overflow: TextOverflow.ellipsis,
                       ),
                       SizedBox(height: 3.h),
@@ -73,11 +98,12 @@ class ProductItemWidget extends StatelessWidget {
                         children: [
                           Text(
                             "Rating (${product.ratingsAverage.toString()})",
-                            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: AppColors.textColor,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14.sp,
-                            ),
+                            style:
+                                Theme.of(context).textTheme.bodySmall!.copyWith(
+                                      color: AppColors.textColor,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14.sp,
+                                    ),
                             overflow: TextOverflow.ellipsis,
                           ),
                           SizedBox(width: 3.h),
@@ -124,4 +150,3 @@ class ProductItemWidget extends StatelessWidget {
     );
   }
 }
-

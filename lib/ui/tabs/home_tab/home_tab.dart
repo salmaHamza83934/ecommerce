@@ -71,7 +71,7 @@ class HomeTab extends StatelessWidget {
               ),
               state is AllCategoriesLoadingState
                   ? const Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(color: AppColors.primaryColor,),
                     )
                   : SizedBox(
                       height: 280.h,
@@ -91,9 +91,36 @@ class HomeTab extends StatelessWidget {
                                   flex: 7,
                                   child: CircleAvatar(
                                     radius: 50.r,
-                                    backgroundImage: NetworkImage(
-                                        viewModel.categoryEntity[index].image ??
-                                            ''),
+                                    backgroundColor: Colors.transparent,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(50.r),
+                                      child: Image.network(
+                                        viewModel.categoryEntity[index].image??'',
+                                        fit: BoxFit.cover,
+                                        width: double.infinity,
+                                        height: 160.h,
+                                        loadingBuilder: (context, child, loadingProgress) {
+                                          if (loadingProgress == null) {
+                                            return child;
+                                          } else {
+                                            return Center(
+                                              child: CircularProgressIndicator(
+                                                color: AppColors.primaryColor,
+                                              ),
+                                            );
+                                          }
+                                        },
+                                        errorBuilder: (context, error, stackTrace) {
+                                          return Center(
+                                            child: Icon(
+                                              Icons.error,
+                                              color: Colors.red,
+                                              size: 50.w,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
                                   ),
                                 ),
                                 Expanded(
@@ -132,7 +159,7 @@ class HomeTab extends StatelessWidget {
               ),
               state is AllBrandsLoadingState
                   ? const Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(color: AppColors.primaryColor,),
                     )
                   : SizedBox(
                       height: 200.h,
@@ -153,13 +180,42 @@ class HomeTab extends StatelessWidget {
                                   height: 130.h,
                                   width: 130.w,
                                   decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: NetworkImage(viewModel
-                                                  .brandsEntity[index].image ??
-                                              ''),
-                                          fit: BoxFit.contain),
+                                      // image: DecorationImage(
+                                      //     image: NetworkImage(viewModel
+                                      //             .brandsEntity[index].image ??
+                                      //         ''),
+                                      //     fit: BoxFit.contain),
                                       borderRadius: BorderRadius.circular(16.r),
                                       border: Border.all(width: 1)),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(50.r),
+                                    child: Image.network(
+                                      viewModel.brandsEntity[index].image??'',
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                      height: 160.h,
+                                      loadingBuilder: (context, child, loadingProgress) {
+                                        if (loadingProgress == null) {
+                                          return child;
+                                        } else {
+                                          return Center(
+                                            child: CircularProgressIndicator(
+                                              color: AppColors.primaryColor,
+                                            ),
+                                          );
+                                        }
+                                      },
+                                      errorBuilder: (context, error, stackTrace) {
+                                        return Center(
+                                          child: Icon(
+                                            Icons.error,
+                                            color: Colors.red,
+                                            size: 50.w,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
                                 ),
                                 Text(
                                   viewModel.brandsEntity[index].name ?? "",
