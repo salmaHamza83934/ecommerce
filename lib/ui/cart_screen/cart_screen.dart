@@ -27,6 +27,7 @@ class CartScreen extends StatelessWidget {
       bloc: viewModel..getCartItems(),
       builder: (context, state) {
         return Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
             title: Text('Cart'),
             actions: [

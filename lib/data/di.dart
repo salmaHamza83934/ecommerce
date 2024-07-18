@@ -26,11 +26,13 @@ import 'package:ecommerce_app/domain/use_cases/login_usecase.dart';
 import 'package:ecommerce_app/domain/use_cases/register_usecase.dart';
 import 'package:ecommerce_app/domain/use_cases/remove_from_wishlist_use_case.dart';
 import 'package:ecommerce_app/domain/use_cases/update_count_cart_use_case.dart';
-
 import '../domain/repository/data_source/cart_remote_data_source.dart';
 import '../domain/use_cases/delete_cart_item_use_case.dart';
 import '../domain/use_cases/get_brand_product_use_case.dart';
 
+
+
+///Auth DI
 RegisterUseCase injectRegisterUseCase(){
   return RegisterUseCase(injectAuthRepository());
 }
@@ -45,6 +47,8 @@ AuthRemoteDataSource injectAuthRemoteDataSource(){
 }
 
 
+
+///Home DI
 GetCategoriesUseCase injectGetCategoriesUseCase(){
   return GetCategoriesUseCase(injectHomeRepository());
 }
@@ -54,16 +58,24 @@ GetBrandsUseCase injectGetBrandsUseCase(){
 GetProductsUseCase injectGetProductsUseCase(){
   return GetProductsUseCase(injectHomeRepository());
 }
+GetCategoryProductUseCase injectGetCategoryProductUseCase(){
+  return GetCategoryProductUseCase(injectHomeRepository());
+}
+GetBrandProductUseCase injectGetBrandProductUseCase(){
+  return GetBrandProductUseCase(injectHomeRepository());}
 AddToCartUseCase injectAddToCartUseCase(){
   return AddToCartUseCase(injectHomeRepository());
 }
-
 HomeRepositoryContract injectHomeRepository(){
   return HomeRepositoryImpl(injectHomeRemoteDataSource());
 }
 HomeRemoteDataSource injectHomeRemoteDataSource(){
   return HomeRemoteDataSourceImpl(ApiManager.getInstance());
 }
+
+
+
+///Cart DI
 GetCartUseCase injectGetCartUseCase(){
   return GetCartUseCase(injectCartRepositoryContract());
 }
@@ -79,12 +91,10 @@ DeleteCartItemUseCase injectDeleteCartItemUseCase(){
 UpdateCountCartUseCase injectUpdateCountCartUseCase(){
   return UpdateCountCartUseCase(injectCartRepositoryContract());
 }
-GetCategoryProductUseCase injectGetCategoryProductUseCase(){
-  return GetCategoryProductUseCase(injectHomeRepository());
-}
-GetBrandProductUseCase injectGetBrandProductUseCase(){
-  return GetBrandProductUseCase(injectHomeRepository());
-}
+
+
+
+///Wishlist DI
 AddToWishlistUseCase injectAddToWishlistUseCase(){
   return AddToWishlistUseCase(injectWishlistRepositoryContract());
 }

@@ -10,7 +10,10 @@ class CartItem extends StatelessWidget {
   Function() deleteItem;
   Function updateCount;
 
-  CartItem({required this.cartEntity, required this.deleteItem, required this.updateCount});
+  CartItem(
+      {required this.cartEntity,
+      required this.deleteItem,
+      required this.updateCount});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,34 @@ class CartItem extends StatelessWidget {
           children: [
             Container(
                 width: 110.w,
-                child: Image.network(cartEntity.product?.imageCover ?? '')),
+                height: 120.h,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(16.r),
+                ),
+                child: Image.network(
+                  cartEntity.product?.imageCover ?? '',
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.primaryColor,
+                        ),
+                      );
+                    }
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return Center(
+                      child: Icon(
+                        Icons.error,
+                        color: Colors.red,
+                        size: 50.w,
+                      ),
+                    );
+                  },
+                )),
             Padding(
               padding: EdgeInsets.all(8.r),
               child: Column(

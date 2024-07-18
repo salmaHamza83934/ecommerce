@@ -78,6 +78,8 @@ class ApiManager {
     }
   }
 
+
+
   ///Home APIs
   Future<Either<BaseError, CategoryOrBrandsResponseDto>> getCategories() async {
     final connectivityResult = await (Connectivity().checkConnectivity());
@@ -172,6 +174,8 @@ class ApiManager {
   }
 
 
+
+  ///Cart APIs
   Future<Either<BaseError, AddToCartResponseDto>> addToCart(
       String productId) async {
     final connectivityResult = await (Connectivity().checkConnectivity());
@@ -261,6 +265,9 @@ class ApiManager {
     }
   }
 
+
+
+  ///Wishlist APIs
   Future<Either<BaseError, AddRemoveWishlistResponseDto>> addToWishlist(
       String productId) async {
     final connectivityResult = await (Connectivity().checkConnectivity());
