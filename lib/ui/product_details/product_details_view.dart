@@ -17,6 +17,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:readmore/readmore.dart';
 
+import '../cart_screen/cart_screen.dart';
+
 class ProductDetailsView extends StatefulWidget {
   static const String routeName = 'product_details';
 
@@ -56,6 +58,9 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                     .primaryColor,
               ),
               InkWell(
+                  onTap: (){
+                    Navigator.pushNamed(context, CartScreen.routeName);
+                  },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Image.asset(

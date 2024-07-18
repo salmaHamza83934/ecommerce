@@ -2,22 +2,29 @@ import 'package:ecommerce_app/data/api/api_manager.dart';
 import 'package:ecommerce_app/data/repository/data_source/auth_remote_data_source_imp.dart';
 import 'package:ecommerce_app/data/repository/data_source/cart_remote_data_source_imp.dart';
 import 'package:ecommerce_app/data/repository/data_source/home_remote_data_source_imp.dart';
+import 'package:ecommerce_app/data/repository/data_source/wishlist_remote_data_source_imp.dart';
 import 'package:ecommerce_app/data/repository/repository/auth_repository_imp.dart';
 import 'package:ecommerce_app/data/repository/repository/cart_repository_imp.dart';
 import 'package:ecommerce_app/data/repository/repository/home_repository_imp.dart';
+import 'package:ecommerce_app/data/repository/repository/wishlist_repository_imp.dart';
 import 'package:ecommerce_app/domain/repository/data_source/auth_remote_data_source.dart';
 import 'package:ecommerce_app/domain/repository/data_source/home_remote_data_source.dart';
+import 'package:ecommerce_app/domain/repository/data_source/wishlist_remote_data_source.dart';
 import 'package:ecommerce_app/domain/repository/repository/auth_repository_contract.dart';
 import 'package:ecommerce_app/domain/repository/repository/cart_repository_contract.dart';
 import 'package:ecommerce_app/domain/repository/repository/home_repository_contract.dart';
+import 'package:ecommerce_app/domain/repository/repository/wishlist_repository_contract.dart';
 import 'package:ecommerce_app/domain/use_cases/add_to_cart_usecase.dart';
+import 'package:ecommerce_app/domain/use_cases/add_to_wishlist_use_case.dart';
 import 'package:ecommerce_app/domain/use_cases/get_brands_usecase.dart';
 import 'package:ecommerce_app/domain/use_cases/get_cart_use_case.dart';
 import 'package:ecommerce_app/domain/use_cases/get_categories_usecase.dart';
 import 'package:ecommerce_app/domain/use_cases/get_category_product_use_case.dart';
 import 'package:ecommerce_app/domain/use_cases/get_products_usecase.dart';
+import 'package:ecommerce_app/domain/use_cases/get_wishlist_use_case.dart';
 import 'package:ecommerce_app/domain/use_cases/login_usecase.dart';
 import 'package:ecommerce_app/domain/use_cases/register_usecase.dart';
+import 'package:ecommerce_app/domain/use_cases/remove_from_wishlist_use_case.dart';
 import 'package:ecommerce_app/domain/use_cases/update_count_cart_use_case.dart';
 
 import '../domain/repository/data_source/cart_remote_data_source.dart';
@@ -77,4 +84,19 @@ GetCategoryProductUseCase injectGetCategoryProductUseCase(){
 }
 GetBrandProductUseCase injectGetBrandProductUseCase(){
   return GetBrandProductUseCase(injectHomeRepository());
+}
+AddToWishlistUseCase injectAddToWishlistUseCase(){
+  return AddToWishlistUseCase(injectWishlistRepositoryContract());
+}
+WishlistRepositoryContract injectWishlistRepositoryContract(){
+  return WishlistRepositoryImp(injectWishlistRemoteDataSource());
+}
+WishlistRemoteDataSource injectWishlistRemoteDataSource(){
+  return WishlistRemoteDataSourceImp(ApiManager.getInstance());
+}
+RemoveFromWishlistUseCase injectRemoveFromWishlistUseCase(){
+  return RemoveFromWishlistUseCase(injectWishlistRepositoryContract());
+}
+GetWishlistUseCase injectGetWishlistUseCase(){
+  return GetWishlistUseCase(injectWishlistRepositoryContract());
 }

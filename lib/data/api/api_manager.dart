@@ -6,9 +6,11 @@ import 'package:ecommerce_app/core/cach_helper/cach_helper.dart';
 import 'package:ecommerce_app/data/api/api_constants.dart';
 import 'package:ecommerce_app/data/api/base_error.dart';
 import 'package:ecommerce_app/data/model/request/registerRequest.dart';
+import 'package:ecommerce_app/data/model/response/AddRemoveWishlistResponseDto.dart';
 import 'package:ecommerce_app/data/model/response/AddToCartResponseDto.dart';
 import 'package:ecommerce_app/data/model/response/CategoryOrBrandsResponseDto.dart';
 import 'package:ecommerce_app/data/model/response/GetCartResponseDto.dart';
+import 'package:ecommerce_app/data/model/response/GetWishlistResponseDto.dart';
 import 'package:ecommerce_app/data/model/response/LoginResponse.dart';
 import 'package:ecommerce_app/data/model/response/RegisterResponse.dart';
 import 'package:ecommerce_app/domain/entities/ProductsResponseEntity.dart';
@@ -253,6 +255,70 @@ class ApiManager {
         return Right(updateCartResponseDto);
       } else {
         return Left(BaseError(errMsg: updateCartResponseDto.status ?? ''));
+      }
+    } else {
+      return Left(BaseError(errMsg: 'Check Internet Connection'));
+    }
+  }
+
+  Future<Either<BaseError, AddRemoveWishlistResponseDto>> addToWishlist(
+      String productId) async {
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.addToWishlistApi);
+      var response = await http.post(url, body: {
+        "productId": productId,
+      }, headers: {
+        'token': CacheHelper.getData(key: 'token'),
+      });
+      var addWishlist =
+      AddRemoveWishlistResponseDto.fromJson(jsonDecode(response.body));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return Right(addWishlist);
+      } else {
+        return Left(BaseError(errMsg: addWishlist.message ?? ''));
+      }
+    } else {
+      return Left(BaseError(errMsg: 'Check Internet Connection'));
+    }
+  }
+
+  Future<Either<BaseError, AddRemoveWishlistResponseDto>> removeFromWishlist(
+      String productId) async {
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      Uri url = Uri.https(ApiConstants.baseUrl, "${ApiConstants.addToWishlistApi}/$productId");
+      var response = await http.delete(url,headers: {
+        'token': CacheHelper.getData(key: 'token'),
+      });
+      var removeWishlist =
+      AddRemoveWishlistResponseDto.fromJson(jsonDecode(response.body));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return Right(removeWishlist);
+      } else {
+        return Left(BaseError(errMsg: removeWishlist.message ?? ''));
+      }
+    } else {
+      return Left(BaseError(errMsg: 'Check Internet Connection'));
+    }
+  }
+
+  Future<Either<BaseError, GetWishlistResponseDto>> getWishlist() async {
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.addToWishlistApi);
+      var response = await http.get(url, headers: {
+        'token': CacheHelper.getData(key: 'token'),
+      });
+      var getWishlist =
+      GetWishlistResponseDto.fromJson(jsonDecode(response.body));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return Right(getWishlist);
+      } else {
+        return Left(BaseError(errMsg: getWishlist.status ?? ''));
       }
     } else {
       return Left(BaseError(errMsg: 'Check Internet Connection'));
