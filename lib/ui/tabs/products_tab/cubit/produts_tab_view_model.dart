@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/domain/entities/GetWishlistResponseEntity.dart';
 import 'package:ecommerce_app/domain/entities/ProductsResponseEntity.dart';
 import 'package:ecommerce_app/domain/use_cases/get_products_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,11 +14,13 @@ class ProductsTabViewModel extends Cubit<ProductsTabStates> {
   AddToWishlistUseCase addToWishlistUseCase;
   RemoveFromWishlistUseCase removeFromWishlistUseCase;
   GetWishlistUseCase getWishlistUseCase;
+
   ProductsTabViewModel(
       {required this.getProductsUseCase,
       required this.addToCartUseCase,
       required this.addToWishlistUseCase,
-      required this.removeFromWishlistUseCase,required this.getWishlistUseCase})
+      required this.removeFromWishlistUseCase,
+      required this.getWishlistUseCase})
       : super(ProductsTabInitialState());
 
   Set<String> favouriteProductIds = <String>{};
@@ -47,15 +50,15 @@ class ProductsTabViewModel extends Cubit<ProductsTabStates> {
       favouriteProductIds.add(productId);
       isFavourite = true;
 
-    var either = await addToWishlistUseCase.invoke(productId);
-    either.fold((l) {
-      emit(AddToWishlistErrorState(l));
-    }, (response) {
-      print(response.data?.length);
-      emit(AddToWishlistSuccessState(response));
-
-    });}
-    getWishlist();
+      var either = await addToWishlistUseCase.invoke(productId);
+      either.fold((l) {
+        emit(AddToWishlistErrorState(l));
+      }, (response) {
+        print(response.data?.length);
+        emit(AddToWishlistSuccessState(response));
+        getWishlist();
+      });
+    }
   }
 
   void removeFromWishlist(String productId) async {
@@ -68,11 +71,11 @@ class ProductsTabViewModel extends Cubit<ProductsTabStates> {
       favouriteProductIds.remove(productId);
       emit(RemoveWishlistSuccessState(response));
       getWishlist();
-
     });
   }
 
-  List<ProductEntity> favoriteProducts=[];
+  List<ProductEntity> favoriteProducts = [];
+
   void getWishlist() async {
     emit(GetWishlistLoadingState('loading...'));
     var either = await getWishlistUseCase.invoke();
@@ -80,9 +83,10 @@ class ProductsTabViewModel extends Cubit<ProductsTabStates> {
       emit(GetWishlistErrorState(l));
     }, (response) {
       print(response.data?.length);
-      if(response.data?.length !=0){
+      if (response.data?.length != 0) {
         favoriteProducts = response.data!;
-        favouriteProductIds = favoriteProducts.map((product) => product.id!).toSet();
+        favouriteProductIds =
+            favoriteProducts.map((product) => product.id!).toSet();
       }
 
       emit(GetWishlistSuccessState(getWishlistResponseEntity: response));

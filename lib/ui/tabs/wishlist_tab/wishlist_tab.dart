@@ -1,7 +1,10 @@
 import 'package:ecommerce_app/core/theme/app_text_styles.dart';
+import 'package:ecommerce_app/main.dart';
 import 'package:ecommerce_app/ui/tabs/wishlist_tab/widgets/wishlist_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../core/theme/app_colors.dart';
 import '../products_tab/cubit/produts_tab_states.dart';
 import '../products_tab/cubit/produts_tab_view_model.dart';
@@ -23,14 +26,26 @@ class WishlistTab extends StatelessWidget {
                     .favouriteProductIds
                     .isNotEmpty
                 ? const Column(
-                  children: [
-                    WishlistItemWidget(),
-                  ],
-                )
+                    children: [
+                      WishlistItemWidget(),
+                    ],
+                  )
                 : Center(
-                    child: Text('No Items in the Wishlist!',
-                        style: AppTextStyles.font24White
-                            .copyWith(color: AppColors.magentaHaze)));
+                  child: Column(
+                      children: [
+                        SizedBox(height: 220.h,),
+                        Icon(
+                          FontAwesomeIcons.solidHeart,
+                          size: 150.r,
+                          color: AppColors.delftBlue,
+                        ),
+                        SizedBox(height: 40.h,),
+                        Text('No Items in the Wishlist!',
+                            style: AppTextStyles.font24White
+                                .copyWith(color: AppColors.delftBlue),textAlign: TextAlign.center,),
+                      ],
+                    ),
+                );
       },
     );
   }

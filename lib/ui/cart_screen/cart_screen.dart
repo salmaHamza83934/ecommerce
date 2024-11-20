@@ -9,6 +9,7 @@ import 'package:ecommerce_app/ui/tabs/products_tab/cubit/produts_tab_view_model.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
 class CartScreen extends StatelessWidget {
@@ -60,9 +61,21 @@ class CartScreen extends StatelessWidget {
               PriceAndCheckoutLine(BlocProvider.of<CartTabViewModel>(context).cartTotalPrice.toString()),
             ],
           )
-              : Center(child: Text('No Items in the Cart!',
-            style: AppTextStyles.font24White.copyWith(
-                color: AppColors.delftBlue),)),
+              : Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  FontAwesomeIcons.cartShopping,
+                  size: 150.r,
+                  color: AppColors.delftBlue,
+                ),
+                SizedBox(height: 40.h,),
+                Text('No Items in the Cart!',
+                  style: AppTextStyles.font24White
+                      .copyWith(color: AppColors.delftBlue),textAlign: TextAlign.center,),
+              ],
+            ))
         );
       },
     );

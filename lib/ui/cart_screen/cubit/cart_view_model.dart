@@ -17,9 +17,6 @@ class CartTabViewModel extends Cubit<CartStates>{
   num? cartTotalPrice;
   int numOfCartItems=0;
 
-  static CartTabViewModel get(context)=>BlocProvider.of(context);
-
-
   void getCartItems() async{
     emit(GetCartLoadingState('Loading...'));
     var either=await getCartUseCase.invoke();
