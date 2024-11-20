@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class DialogUtils {
@@ -7,14 +8,14 @@ class DialogUtils {
         context: context,
         builder: (context) {
           return AlertDialog(
-            backgroundColor: Color(0xFF004182),
+            backgroundColor: const Color(0xFF004182),
             content: Row(
               children: [
-                CircularProgressIndicator(color: Colors.white,),
-                SizedBox(
+                const CircularProgressIndicator(color: Colors.white,),
+                const SizedBox(
                   width: 12,
                 ),
-                Text(message,style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),),
+                Text(message,style: AppTextStyles.font14White),
               ],
             ),
           );
@@ -41,7 +42,7 @@ class DialogUtils {
             Navigator.pop(context);
             posAction?.call();
           },
-          child: Text(posActionName,style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),)));
+          child: Text(posActionName,style: AppTextStyles.font14White,)));
     }
     if (negActionName != null) {
       actions.add(TextButton(
@@ -49,17 +50,17 @@ class DialogUtils {
             Navigator.pop(context);
             negAction?.call();
           },
-          child: Text(negActionName,style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),)));
+          child: Text(negActionName,style: AppTextStyles.font14White)));
     }
     showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            backgroundColor: Color(0xFF004182),
-            content: Text(message,style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),),
-            title: Text(title,style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),),
+            backgroundColor: const Color(0xFF004182),
+            content: Text(message,style: AppTextStyles.font14White),
+            title: Text(title,style: AppTextStyles.font14White),
             actions: actions,
-            titleTextStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+            titleTextStyle: AppTextStyles.font14White
           );
         });
   }

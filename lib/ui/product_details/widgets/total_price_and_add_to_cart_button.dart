@@ -1,10 +1,9 @@
 import 'package:ecommerce_app/domain/entities/ProductsResponseEntity.dart';
-import 'package:ecommerce_app/ui/home_screen/cubit/home_screen_view_model.dart';
-import 'package:ecommerce_app/ui/tabs/products_tab/cubit/produts_tab_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../core/theme/Colors.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_text_styles.dart';
 
 class TotalPriceAndAddToCartButton extends StatelessWidget {
   Function() addToCart;
@@ -12,7 +11,8 @@ class TotalPriceAndAddToCartButton extends StatelessWidget {
   int counterValue;
 
 
-  TotalPriceAndAddToCartButton({required this.addToCart,required this.productEntity, required this.counterValue});
+  TotalPriceAndAddToCartButton(
+      {super.key, required this.addToCart, required this.productEntity, required this.counterValue});
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +20,11 @@ class TotalPriceAndAddToCartButton extends StatelessWidget {
       children: [
         Column(
           children: [
-            Text(
+            const Text(
               'Total price',
-              style: TextStyle(color: AppColors.greyColor),
+              style: TextStyle(color: AppColors.slateGrey),
             ),
-            Text("EGP  ${productEntity.price!*counterValue}"),
+            Text("EGP  ${productEntity.price! * counterValue}"),
           ],
         ),
         SizedBox(
@@ -34,24 +34,25 @@ class TotalPriceAndAddToCartButton extends StatelessWidget {
           onTap: addToCart,
           child: Container(
             decoration: BoxDecoration(
-                color: AppColors.primaryColor,
+                color: AppColors.magentaHaze,
                 borderRadius: BorderRadius.circular(16.r)),
             width: 250.w,
             height: 50.h,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.add_shopping_cart_outlined,
-                  color: Colors.white,
-                ),
-                SizedBox(
-                  width: 25.w,
-                ),
-                Text('Add to cart',
-                    style: Theme.of(context).textTheme.bodyMedium!
-                        .copyWith(color: Colors.white))
-              ],
+              const Icon(
+              Icons.add_shopping_cart_outlined,
+              color: Colors.white,
+            ),
+            SizedBox(
+              width: 25.w,
+            ),
+            Text('Add to cart',
+              style: AppTextStyles.font16DelftBlue.copyWith(
+                  color: Colors.white),
+
+            )],
             ),
           ),
         ),

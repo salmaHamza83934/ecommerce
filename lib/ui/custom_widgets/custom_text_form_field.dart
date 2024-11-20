@@ -3,50 +3,65 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextFormField extends StatelessWidget {
   String hintText;
-  bool isObsecure;
+  bool isObscure;
   var validator;
-  var controller;
-  var suffixIcon;
-  var keyboardtype;
+  TextEditingController controller;
+  Widget? suffixIcon;
+  TextInputType keyboardType;
   String fieldText;
-  CustomTextFormField({required this.hintText,this.isObsecure=false,required this.validator,
-    required this.controller,this.suffixIcon,required this.fieldText,this.keyboardtype=TextInputType.text});
+
+  CustomTextFormField(
+      {super.key,
+      required this.hintText,
+      this.isObscure = false,
+      required this.validator,
+      required this.controller,
+      this.suffixIcon,
+      required this.fieldText,
+      this.keyboardType = TextInputType.text});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-          child: Align(alignment: Alignment.topLeft,child: Text(fieldText,style: TextStyle(color: Colors.white,))),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          child: Align(
+              alignment: Alignment.topLeft,
+              child: Text(fieldText,
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ))),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           child: TextFormField(
-            keyboardType: keyboardtype,
+            keyboardType: keyboardType,
             decoration: InputDecoration(
-                fillColor: Colors.white,
-                filled: true,
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15.r),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15.r),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15.r),
-                ),
-                hintText:hintText,
-                hintStyle: TextStyle(color: Colors.grey),
+              fillColor: Colors.white,
+              filled: true,
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.r),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.r),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.r),
+              ),
+              hintText: hintText,
+              hintStyle: const TextStyle(color: Colors.grey),
               suffixIcon: suffixIcon,
             ),
-            style: TextStyle(color: Colors.black),
-            obscureText: isObsecure,
+            style: const TextStyle(color: Colors.black),
+            obscureText: isObscure,
             controller: controller,
             validator: validator,
           ),
         ),
-        SizedBox(height: 16,),
+        const SizedBox(
+          height: 16,
+        ),
       ],
     );
   }

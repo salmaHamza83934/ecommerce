@@ -21,18 +21,10 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource{
   }
 
   @override
-  Future<Either<BaseError, CategoryOrBrandsResponseEntity>> getBrands()async {
-    var either= await apiManager.getBrands();
-    return either.fold((l) {
-      return Left(BaseError(errMsg: l.errMsg));
-    }, (r){
-      return Right(r);
-    });
-  }
 
   @override
-  Future<Either<BaseError, ProductsResponseEntity>> getProducts() async{
-    var either= await apiManager.getProducts();
+  Future<Either<BaseError, ProductsResponseEntity>> getProducts({String? queryParams}) async{
+    var either= await apiManager.getProducts(queryParams: queryParams);
     return either.fold((l) {
       return Left(BaseError(errMsg: l.errMsg));
     }, (r){
@@ -43,16 +35,6 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource{
  @override
   Future<Either<BaseError, AddToCartResponseEntity>> addToCart(String productId) async{
     var either= await apiManager.addToCart(productId);
-    return either.fold((l) {
-      return Left(BaseError(errMsg: l.errMsg));
-    }, (r){
-      return Right(r);
-    });
-  }
-
-  @override
-  Future<Either<BaseError, ProductsResponseEntity>> getProductByBrandId(String brandId) async{
-    var either= await apiManager.getProductByBrandId(brandId);
     return either.fold((l) {
       return Left(BaseError(errMsg: l.errMsg));
     }, (r){

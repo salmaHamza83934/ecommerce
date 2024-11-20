@@ -25,23 +25,7 @@ class AllCategoriesSuccessState extends HomeTabStates {
 }
 
 
-class AllBrandsLoadingState extends HomeTabStates {
-  String loadingMsg;
 
-  AllBrandsLoadingState(this.loadingMsg);
-}
-
-class AllBrandsErrorState extends HomeTabStates {
-  BaseError error;
-
-  AllBrandsErrorState(this.error);
-}
-
-class AllBrandsSuccessState extends HomeTabStates {
-  CategoryOrBrandsResponseEntity brandsResponseEntity;
-
-  AllBrandsSuccessState(this.brandsResponseEntity);
-}
 class CategoryProductsLoadingState extends HomeTabStates {
   String loadingMsg;
 
@@ -58,20 +42,22 @@ class CategoryProductsSuccessState extends HomeTabStates {
   ProductsResponseEntity productsResponseEntity;
 
   CategoryProductsSuccessState(this.productsResponseEntity);
-}class BrandProductsLoadingState extends HomeTabStates {
+}
+class NewArrivalProductsLoadingState extends HomeTabStates {
   String loadingMsg;
 
-  BrandProductsLoadingState(this.loadingMsg);
+  NewArrivalProductsLoadingState(this.loadingMsg);
 }
 
-class BrandProductsErrorState extends HomeTabStates {
+class NewArrivalProductsErrorState extends HomeTabStates {
   BaseError error;
 
-  BrandProductsErrorState(this.error);
+  NewArrivalProductsErrorState(this.error);
 }
 
-class BrandProductsSuccessState extends HomeTabStates {
+class NewArrivalProductsSuccessState extends HomeTabStates {
   ProductsResponseEntity productsResponseEntity;
 
-  BrandProductsSuccessState(this.productsResponseEntity);
+  NewArrivalProductsSuccessState(this.productsResponseEntity);
 }
+

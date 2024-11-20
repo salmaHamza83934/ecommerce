@@ -1,7 +1,8 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce_app/core/asset_data/assets_img.dart';
-import 'package:ecommerce_app/core/theme/Colors.dart';
-import 'package:ecommerce_app/data/di.dart';
+import 'package:ecommerce_app/core/routing/routes_names.dart';
+import 'package:ecommerce_app/core/di.dart';
+import 'package:ecommerce_app/core/theme/app_colors.dart';
+import 'package:ecommerce_app/core/theme/app_text_styles.dart';
 import 'package:ecommerce_app/domain/entities/ProductsResponseEntity.dart';
 import 'package:ecommerce_app/ui/cart_screen/cubit/cart_states.dart';
 import 'package:ecommerce_app/ui/cart_screen/cubit/cart_view_model.dart';
@@ -11,60 +12,40 @@ import 'package:ecommerce_app/ui/product_details/widgets/product_description.dar
 import 'package:ecommerce_app/ui/product_details/widgets/product_images_widget.dart';
 import 'package:ecommerce_app/ui/product_details/widgets/size_line_widget.dart';
 import 'package:ecommerce_app/ui/product_details/widgets/total_price_and_add_to_cart_button.dart';
-import 'package:ecommerce_app/ui/tabs/products_tab/cubit/produts_tab_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:readmore/readmore.dart';
 
-import '../cart_screen/cart_screen.dart';
 
 class ProductDetailsView extends StatefulWidget {
-  static const String routeName = 'product_details';
+   ProductEntity productEntity;
+   ProductDetailsView(this.productEntity);
 
   @override
   State<ProductDetailsView> createState() => _ProductDetailsViewState();
 }
 
 class _ProductDetailsViewState extends State<ProductDetailsView> {
-  CartTabViewModel viewModel = CartTabViewModel(
-    addToCartUseCase: injectAddToCartUseCase(),
-      getCartUseCase: injectGetCartUseCase(),
-      deleteCartUseCase: injectDeleteCartItemUseCase(),
-      updateCountCartUseCase: injectUpdateCountCartUseCase());
 
   int counterValue = 1;
 
   @override
   Widget build(BuildContext context) {
-    var args = ModalRoute
-        .of(context)
-        ?.settings
-        .arguments as ProductEntity;
-    var theme = Theme.of(context);
-    return BlocConsumer<CartTabViewModel, CartStates>(
-      bloc: viewModel,
+    return BlocBuilder<CartTabViewModel, CartStates>(
       builder: (context, state) {
         return Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            title: Text('Product Details'),
+            title: const Text('Product Details'),
             actions: [
-              Icon(
-                Icons.search,
-                size: 35.r,
-                color: Theme
-                    .of(context)
-                    .primaryColor,
-              ),
               InkWell(
                   onTap: (){
-                    Navigator.pushNamed(context, CartScreen.routeName);
+                    Navigator.pushNamed(context, Routes.cartScreen);
                   },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Image.asset(
-                    MyAssets.shoppingCart,
+                    AssetImages.shoppingCart,
                     height: 30.h,
                     width: 30.w,
                   ),
@@ -73,10 +54,10 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
             ],
           ),
           body: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
-                ProductImagesWidget(args),
+                ProductImagesWidget(widget.productEntity),
                 SizedBox(
                   height: 24.h,
                 ),
@@ -87,14 +68,14 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                     children: [
                       Row(
                         children: [
-                          Container(
+                          SizedBox(
                               width: 280.w,
                               child: Text(
-                                args.title ?? '',
+                                widget.productEntity.title ?? '',
                                 overflow: TextOverflow.ellipsis,
                               )),
-                          Spacer(),
-                          Text('EGP ${args.price.toString()}'),
+                          const Spacer(),
+                          Text('EGP ${widget.productEntity.price.toString()}'),
                         ],
                       ),
                       SizedBox(
@@ -110,26 +91,24 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                 borderRadius: BorderRadius.circular(20.r)),
                             child: Center(
                               child: Text(
-                                "${args.sold} Sold",
-                                style: theme.textTheme.bodyMedium!
-                                    .copyWith(fontSize: 14.sp),
+                                "${widget.productEntity.sold} Sold",
+                                style: AppTextStyles.font14White.copyWith(color: AppColors.delftBlue),
                               ),
                             ),
                           ),
                           SizedBox(
                             width: 16.w,
                           ),
-                          Icon(
+                          const Icon(
                             Icons.star,
                             color: Colors.yellow,
                           ),
                           Text(
-                            ' ${args.ratingsAverage} (${args.ratingsQuantity})',
-                            style: theme.textTheme.bodySmall!.copyWith(
-                                color: theme.primaryColor,
-                                fontWeight: FontWeight.w700),
+                            ' ${widget.productEntity.ratingsAverage} (${widget.productEntity.ratingsQuantity})',
+                            style: AppTextStyles.font14White.copyWith(color: AppColors.delftBlue),
+
                           ),
-                          Spacer(),
+                          const Spacer(),
                           ProductCounter((value) {
                             setState(() {
                               counterValue =
@@ -141,27 +120,27 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                       SizedBox(
                         height: 16.h,
                       ),
-                      ProductDescription(args),
+                      ProductDescription(widget.productEntity),
                       SizedBox(
                         height: 16.h,
                       ),
-                      SizeLineWidget(),
+                      const SizeLineWidget(),
                       SizedBox(
                         height: 16.h,
                       ),
-                      ColorLineWidget(),
+                      const ColorLineWidget(),
                       SizedBox(
                         height: 50.h,
                       ),
                       TotalPriceAndAddToCartButton(addToCart: (){
-                        viewModel.addToCart(args.id??'');
+                        BlocProvider.of<CartTabViewModel>(context).addToCart(widget.productEntity.id??'');
                         Future.delayed((const Duration(seconds: 1)),(){
                           if(counterValue>1){
-                            viewModel.updateCountCart(args.id??'', counterValue);
+                            BlocProvider.of<CartTabViewModel>(context).updateCountCart(widget.productEntity.id??'', counterValue);
                           }
                         });
                       },
-                          productEntity: args, counterValue: counterValue),
+                          productEntity: widget.productEntity, counterValue: counterValue),
                     ],
                   ),
                 ),
@@ -169,9 +148,6 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
             ),
           ),
         );
-      },
-      listener: (context, state) {
-
       },
     );
   }

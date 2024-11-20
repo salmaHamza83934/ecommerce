@@ -16,14 +16,9 @@ class HomeRepositoryImpl implements HomeRepositoryContract{
     return homeRemoteDataSource.getCategories();
   }
 
-  @override
-  Future<Either<BaseError, CategoryOrBrandsResponseEntity>> getBrands() {
-    // TODO: implement getBrands
-    return homeRemoteDataSource.getBrands();
-  }
 
   @override
-  Future<Either<BaseError, ProductsResponseEntity>> getProducts() {
+  Future<Either<BaseError, ProductsResponseEntity>> getProducts({String? queryParams}) {
     // TODO: implement getProducts
     return homeRemoteDataSource.getProducts();
   }
@@ -34,11 +29,6 @@ class HomeRepositoryImpl implements HomeRepositoryContract{
     return homeRemoteDataSource.addToCart(productId);
   }
 
-  @override
-  Future<Either<BaseError, ProductsResponseEntity>> getProductByBrandId(String brandId) {
-    // TODO: implement getProductByBrandId
-    return homeRemoteDataSource.getProductByBrandId(brandId);
-  }
 
   @override
   Future<Either<BaseError, ProductsResponseEntity>> getProductByCategoryId(String categoryId) {

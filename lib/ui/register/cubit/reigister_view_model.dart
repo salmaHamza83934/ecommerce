@@ -2,7 +2,6 @@ import 'package:ecommerce_app/ui/register/cubit/register_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../domain/use_cases/login_usecase.dart';
 import '../../../domain/use_cases/register_usecase.dart';
 
 class RegisterScreenViewModel extends Cubit<RegisterStates> {

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../core/theme/Colors.dart';
+import '../../../core/theme/app_colors.dart';
 
 class PriceAndCheckoutLine extends StatelessWidget {
   String price;
 
 
-  PriceAndCheckoutLine(this.price);
+  PriceAndCheckoutLine(this.price, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +18,10 @@ class PriceAndCheckoutLine extends StatelessWidget {
         children: [
           Column(
             children: [
-              Text(
+              const Text(
                 'Total price',
                 style:
-                TextStyle(color: AppColors.greyColor),
+                TextStyle(color: AppColors.slateGrey),
               ),
               Text("EGP  $price"),
             ],
@@ -31,7 +31,7 @@ class PriceAndCheckoutLine extends StatelessWidget {
           ),
           Container(
             decoration: BoxDecoration(
-                color: AppColors.primaryColor,
+                color: AppColors.magentaDye,
                 borderRadius: BorderRadius.circular(16.r)),
             width: 250.w,
             height: 50.h,
@@ -47,7 +47,7 @@ class PriceAndCheckoutLine extends StatelessWidget {
                 SizedBox(
                   width: 15.w,
                 ),
-                Icon(
+                const Icon(
                   Icons.arrow_forward,
                   color: Colors.white,
                 ),

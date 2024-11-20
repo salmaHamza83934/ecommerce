@@ -1,7 +1,10 @@
+import 'package:ecommerce_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SizeLineWidget extends StatefulWidget {
+  const SizeLineWidget({super.key});
+
 
 
   @override
@@ -13,15 +16,14 @@ class _SizeLineWidgetState extends State<SizeLineWidget> {
   int selectedSize=0;
   @override
   Widget build(BuildContext context) {
-    var theme=Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Size'),
+        const Text('Size'),
         SizedBox(
           height: 8.h,
         ),
-        Container(
+        SizedBox(
           height: 40.h,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
@@ -33,10 +35,10 @@ class _SizeLineWidgetState extends State<SizeLineWidget> {
                     });
                   },
                   child: CircleAvatar(
-                    backgroundColor: selectedSize==index?theme.primaryColor:Colors.white,
+                    backgroundColor: selectedSize==index?AppColors.delftBlue:Colors.white,
                     child: Text(
                       sizes[index],
-                      style: TextStyle(color: selectedSize==index?Colors.white:theme.primaryColor),
+                      style: TextStyle(color: selectedSize==index?Colors.white:AppColors.delftBlue),
                     ),
                   ));
             },itemCount: 5,

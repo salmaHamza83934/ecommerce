@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ColorLineWidget extends StatefulWidget {
+  const ColorLineWidget({super.key});
+
 
   @override
   State<ColorLineWidget> createState() => _ColorLineWidgetState();
@@ -16,11 +18,11 @@ class _ColorLineWidgetState extends State<ColorLineWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Color'),
+        const Text('Color'),
         SizedBox(
           height: 8.h,
         ),
-        Container(
+        SizedBox(
           height: 40.h,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
@@ -33,7 +35,7 @@ class _ColorLineWidgetState extends State<ColorLineWidget> {
                   },
                   child: CircleAvatar(
                       backgroundColor: colors[index],
-                      child:selectedColor==index?Icon(Icons.check,color: Colors.white,):SizedBox()
+                      child:selectedColor==index?const Icon(Icons.check,color: Colors.white,):const SizedBox()
                   ));
             },itemCount: 5,
           ),
