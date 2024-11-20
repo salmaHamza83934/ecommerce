@@ -1,13 +1,17 @@
 import 'package:ecommerce_app/core/cach_helper/cach_helper.dart';
+import 'package:ecommerce_app/core/routing/routes_names.dart';
+import 'package:ecommerce_app/core/theme/app_colors.dart';
+import 'package:ecommerce_app/core/theme/app_text_styles.dart';
 import 'package:ecommerce_app/ui/login/login_view.dart';
 import 'package:ecommerce_app/ui/tabs/profile_tab/widgets/profile_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProfileTab extends StatelessWidget {
+  const ProfileTab({super.key});
+
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: SingleChildScrollView(
@@ -22,21 +26,20 @@ class ProfileTab extends StatelessWidget {
                     Text('Welcome, ${CacheHelper.getData(key: 'name')}'),
                     Text(
                       '${CacheHelper.getData(key: 'email')}',
-                      style: theme.textTheme.bodySmall!.copyWith(
-                          color: Colors.grey, fontWeight: FontWeight.w600),
+                      style: AppTextStyles.font14White.copyWith(color: AppColors.frenchGrey),
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, LoginView.routeName);
+                      Navigator.pushNamed(context, Routes.loginScreen);
                       CacheHelper.removeData(key: 'token');
                       CacheHelper.removeData(key: 'email');
                       CacheHelper.removeData(key: 'name');
                       CacheHelper.removeData(key: 'phone');
                     },
-                    icon: Icon(Icons.logout_outlined,size: 30.r,color: theme.primaryColor,)),
+                    icon: Icon(Icons.logout_outlined,size: 30.r,color: AppColors.delftBlue,)),
               ],
             ),
             SizedBox(

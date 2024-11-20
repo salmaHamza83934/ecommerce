@@ -1,4 +1,3 @@
-import 'package:ecommerce_app/data/model/response/RegisterResponse.dart';
 import 'package:ecommerce_app/domain/entities/auth_result_entity.dart';
 
 class RegisterStates{}

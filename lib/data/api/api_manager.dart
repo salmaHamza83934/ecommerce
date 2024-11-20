@@ -13,7 +13,6 @@ import 'package:ecommerce_app/data/model/response/GetCartResponseDto.dart';
 import 'package:ecommerce_app/data/model/response/GetWishlistResponseDto.dart';
 import 'package:ecommerce_app/data/model/response/LoginResponse.dart';
 import 'package:ecommerce_app/data/model/response/RegisterResponse.dart';
-import 'package:ecommerce_app/domain/entities/ProductsResponseEntity.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/request/LoginRequest.dart';
@@ -99,48 +98,12 @@ class ApiManager {
     }
   }
 
-  Future<Either<BaseError, CategoryOrBrandsResponseDto>> getBrands() async {
-    final connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile ||
-        connectivityResult == ConnectivityResult.wifi) {
-      Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.brandsApi);
-      var response = await http.get(url);
-      var brandsResponse =
-          CategoryOrBrandsResponseDto.fromJson(jsonDecode(response.body));
-      if (response.statusCode >= 200 && response.statusCode < 300) {
-        return Right(brandsResponse);
-      } else {
-        return Left(BaseError(errMsg: brandsResponse.message ?? ''));
-      }
-    } else {
-      return Left(BaseError(errMsg: 'Check Internet Connection'));
-    }
-  }
 
-  Future<Either<BaseError, ProductResponseDto>> getProducts() async {
+  Future<Either<BaseError, ProductResponseDto>> getProducts({String? queryParams}) async {
     final connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {
-      Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.productsApi);
-      var response = await http.get(url);
-      var productResponse =
-          ProductResponseDto.fromJson(jsonDecode(response.body));
-      if (response.statusCode >= 200 && response.statusCode < 300) {
-        return Right(productResponse);
-      } else {
-        return Left(BaseError(errMsg: productResponse.message ?? ''));
-      }
-    } else {
-      return Left(BaseError(errMsg: 'Check Internet Connection'));
-    }
-  }
-
-  Future<Either<BaseError, ProductResponseDto>> getProductByBrandId(String brandId) async {
-    final connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile ||
-        connectivityResult == ConnectivityResult.wifi) {
-      Uri url =
-          Uri.https(ApiConstants.baseUrl, ApiConstants.productsApi, {'brand': brandId});
+      Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.productsApi,{'sort':'$queryParams'});
       var response = await http.get(url);
       var productResponse =
           ProductResponseDto.fromJson(jsonDecode(response.body));

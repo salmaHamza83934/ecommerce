@@ -8,7 +8,7 @@ import Foundation
 import connectivity_plus
 import path_provider_foundation
 import shared_preferences_foundation
-import sqflite
+import sqflite_darwin
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   ConnectivityPlugin.register(with: registry.registrar(forPlugin: "ConnectivityPlugin"))

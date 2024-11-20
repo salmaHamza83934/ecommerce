@@ -1,65 +1,67 @@
 import 'package:ecommerce_app/domain/entities/CategoryOrBrandsResponseEntity.dart';
+import 'package:ecommerce_app/domain/use_cases/get_products_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../domain/entities/ProductsResponseEntity.dart';
-import '../../../../domain/use_cases/get_brand_product_use_case.dart';
-import '../../../../domain/use_cases/get_brands_usecase.dart';
 import '../../../../domain/use_cases/get_categories_usecase.dart';
 import '../../../../domain/use_cases/get_category_product_use_case.dart';
-import '../../../home_screen/cubit/home_screen_states.dart';
 import 'home_tab_states.dart';
 
 class HomeTabViewModel extends Cubit<HomeTabStates> {
   GetCategoriesUseCase getCategoriesUseCase;
-  GetBrandsUseCase getBrandsUseCase;
-  GetBrandProductUseCase getBrandProductUseCase;
   GetCategoryProductUseCase getCategoryProductUseCase;
+  GetProductsUseCase getProductsUseCase;
 
   HomeTabViewModel(
       {required this.getCategoriesUseCase,
-      required this.getBrandsUseCase,
-      required this.getBrandProductUseCase,
-      required this.getCategoryProductUseCase})
+      required this.getCategoryProductUseCase,
+      required this.getProductsUseCase})
       : super(HomeTabInitialState());
 
   List<CategoryOrBrandsEntity> categoryEntity = [];
-  List<CategoryOrBrandsEntity> brandsEntity = [];
-  List<ProductEntity> brandProducts=[];
-  List<ProductEntity> categoryProducts=[];
-
+  List<ProductEntity> categoryProducts = [];
+  List<ProductEntity> newArrivalProducts = [];
 
   void getAllCategories() async {
     emit(AllCategoriesLoadingState('Loading...'));
     var either = await getCategoriesUseCase.invoke();
-    either.fold((l) {
-      emit(AllCategoriesErrorState(l));
-    }, (response) {
-      categoryEntity = response.data ?? [];
-      emit(AllCategoriesSuccessState(response));
-    });
+    either.fold(
+          (failure) {
+        emit(AllCategoriesErrorState(failure));
+      },
+          (response) {
+        if (response.data != null) {
+          final filteredCategories = response.data!.where((category) {
+            return category.name == 'Men\'s Fashion' ||
+                category.name == 'Women\'s Fashion' ||
+                category.name == 'Baby & Toys' ||
+                category.name == 'Electronics';
+          }).toSet();
+          // Update the categoryEntity list while ensuring no duplicates
+          for (var category in filteredCategories) {
+            if (!categoryEntity.any((existing) => existing.id == category.id)) {
+              categoryEntity.add(category);
+            }
+          }
+        }
+        emit(AllCategoriesSuccessState(response));
+      },
+    );
   }
 
-  void getAllBrands() async {
-    emit(AllBrandsLoadingState('Loading...'));
-    var either = await getBrandsUseCase.invoke();
-    either.fold((l) {
-      emit(AllBrandsErrorState(l));
-    }, (response) {
-      brandsEntity = response.data ?? [];
-      emit(AllBrandsSuccessState(response));
-    });
+  void getNewArrivalProducts() async {
+    emit(NewArrivalProductsLoadingState('loading...'));
+    var either = await getProductsUseCase.invoke(queryParams: '-createdAt');
+    either.fold(
+          (failure) {
+        emit(NewArrivalProductsErrorState(failure)); // Ensure error state is emitted
+      },
+          (response) {
+        newArrivalProducts = response.data ?? [];
+        emit(NewArrivalProductsSuccessState(response)); // Success state
+      },
+    );
   }
 
-  void getProductByBrandId(String brandId) async {
-    emit(BrandProductsLoadingState('Loading...'));
-    var either = await getBrandProductUseCase.invoke(brandId);
-    either.fold((l) {
-      emit(BrandProductsErrorState(l));
-    }, (response) {
-      brandProducts = response.data ?? [];
-      emit(BrandProductsSuccessState(response));
-    });
-  }
 
   void getProductByCategoryId(String categoryId) async {
     emit(CategoryProductsLoadingState('Loading...'));

@@ -1,20 +1,22 @@
+import 'package:ecommerce_app/core/theme/app_text_styles.dart';
+import 'package:ecommerce_app/ui/cart_screen/cubit/cart_states.dart';
+import 'package:ecommerce_app/ui/cart_screen/cubit/cart_view_model.dart';
+import 'package:ecommerce_app/ui/tabs/products_tab/cubit/produts_tab_states.dart';
+import 'package:ecommerce_app/ui/tabs/products_tab/cubit/produts_tab_view_model.dart';
+import 'package:ecommerce_app/ui/tabs/products_tab/cubit/produts_tab_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../../core/theme/Colors.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../../../domain/entities/ProductsResponseEntity.dart';
 
 class ProductItemWidget extends StatelessWidget {
   final ProductEntity product;
-  final bool isFavourite;
-  final void Function() addToCart;
-  final void Function() addToWishlist;
 
-  ProductItemWidget({
+  const ProductItemWidget({super.key,
     required this.product,
-    required this.isFavourite,
-    required this.addToCart,
-    required this.addToWishlist,
   });
 
   @override
@@ -31,7 +33,7 @@ class ProductItemWidget extends StatelessWidget {
             Container(
               height: 160.h,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16.r)
+                  borderRadius: BorderRadius.circular(16.r)
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16.r),
@@ -44,9 +46,9 @@ class ProductItemWidget extends StatelessWidget {
                     if (loadingProgress == null) {
                       return child;
                     } else {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(
-                          color: AppColors.primaryColor,
+                          color: AppColors.magentaDye,
                         ),
                       );
                     }
@@ -69,7 +71,7 @@ class ProductItemWidget extends StatelessWidget {
                 Container(
                   width: 180.w,
                   padding: EdgeInsets.symmetric(horizontal: 8.w),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                   ),
                   child: Column(
@@ -77,20 +79,13 @@ class ProductItemWidget extends StatelessWidget {
                     children: [
                       Text(
                         product.title ?? '',
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: AppColors.textColor,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16.sp,
-                            ),
+                        style: AppTextStyles.font16DelftBlue,
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
                         "EGP ${product.price.toString()}",
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: AppColors.textColor,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14.sp,
-                            ),
+                        style: AppTextStyles.font14White.copyWith(
+                            color: AppColors.magentaDye),
                         overflow: TextOverflow.ellipsis,
                       ),
                       SizedBox(height: 3.h),
@@ -98,16 +93,12 @@ class ProductItemWidget extends StatelessWidget {
                         children: [
                           Text(
                             "Rating (${product.ratingsAverage.toString()})",
-                            style:
-                                Theme.of(context).textTheme.bodySmall!.copyWith(
-                                      color: AppColors.textColor,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14.sp,
-                                    ),
+                            style: AppTextStyles.font14White.copyWith(
+                                color: AppColors.slateGrey),
                             overflow: TextOverflow.ellipsis,
                           ),
                           SizedBox(width: 3.h),
-                          Icon(
+                          const Icon(
                             Icons.star,
                             color: Colors.yellow,
                             size: 20,
@@ -117,33 +108,60 @@ class ProductItemWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                GestureDetector(
-                  onTap: addToCart,
-                  child: Icon(
-                    Icons.add_circle,
-                    color: Theme.of(context).primaryColor,
-                    size: 35,
-                  ),
+                BlocBuilder<CartTabViewModel, CartStates>(
+                  builder: (context, state) {
+                    return GestureDetector(
+                      onTap: () {
+                        BlocProvider.of<CartTabViewModel>(context)
+                            .addToCart(product.id ?? '');
+                      },
+                      child: Container(
+                        width: 40.w,
+                        height: 40.h,
+                        decoration: const ShapeDecoration(
+                          color: AppColors.delftBlue,
+                          shape: OvalBorder(),
+                        ),
+                        child: Icon(
+                          FontAwesomeIcons.cartPlus,
+                          color: Colors.white,
+                          size: 20.r,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
           ]),
-          GestureDetector(
-            onTap: addToWishlist,
-            child: Container(
-              margin: EdgeInsets.all(8.r),
-              width: 40.w,
-              height: 40.h,
-              decoration: ShapeDecoration(
-                shadows: [BoxShadow(color: Colors.black)],
-                color: Colors.white,
-                shape: OvalBorder(),
-              ),
-              child: Icon(
-                isFavourite ? Icons.favorite : Icons.favorite_border,
-                color: AppColors.primaryColor,
-              ),
-            ),
+          BlocBuilder<ProductsTabViewModel, ProductsTabStates>(
+            builder: (context, state) {
+              final isFavourite =
+              BlocProvider.of<ProductsTabViewModel>(context)
+                  .favouriteProductIds
+                  .contains(
+                  product.id??'');
+              return GestureDetector(
+                onTap: () {
+                  BlocProvider.of<ProductsTabViewModel>(context).addToWishlist(
+                      product.id ?? '');
+                },
+                child: Container(
+                  margin: EdgeInsets.all(8.r),
+                  width: 40.w,
+                  height: 40.h,
+                  decoration: const ShapeDecoration(
+                    shadows: [BoxShadow(color: Colors.black)],
+                    color: Colors.white,
+                    shape: OvalBorder(),
+                  ),
+                  child: Icon(
+                    isFavourite ? Icons.favorite : Icons.favorite_border,
+                    color: AppColors.magentaDye,
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),

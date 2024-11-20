@@ -1,32 +1,32 @@
 import 'package:ecommerce_app/core/cach_helper/cach_helper.dart';
-import 'package:ecommerce_app/data/di.dart';
-import 'package:ecommerce_app/ui/home_screen/home_screen_view.dart';
+import 'package:ecommerce_app/core/routing/routes_names.dart';
+import 'package:ecommerce_app/core/di.dart';
+import 'package:ecommerce_app/ui/home_screen/home_page_layout.dart';
 import 'package:ecommerce_app/ui/login/cubit/login_states.dart';
 import 'package:ecommerce_app/ui/login/cubit/login_view_model.dart';
 import 'package:ecommerce_app/ui/register/register_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../custom_widgets/custom_text_form_field.dart';
 import '../dialog_utils.dart';
 
 class LoginView extends StatefulWidget {
-  static const String routeName = 'login_view';
+
+  const LoginView({super.key});
 
   @override
   State<LoginView> createState() => _LoginViewState();
 }
 
 class _LoginViewState extends State<LoginView> {
-  LoginScreenViewModel viewModel = LoginScreenViewModel(
-      loginUseCase: injectLoginUseCase());
+
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginScreenViewModel, LoginStates>(
-      bloc: viewModel, listener: (context, state) {
+       listener: (context, state) {
       if (state is LoginLoadingState) {
         DialogUtils.showLoading(context, 'Waiting');
       }
@@ -39,12 +39,12 @@ class _LoginViewState extends State<LoginView> {
         CacheHelper.saveData(key: 'token', value: state.response.token);
         CacheHelper.saveData(key: 'name', value: state.response.userEntity?.name);
         CacheHelper.saveData(key: 'email', value: state.response.userEntity?.email);
-        Future.delayed(Duration(seconds: 2),(){
-        Navigator.pushNamed(context, HomeView.routeName);
+        Future.delayed(const Duration(seconds: 2),(){
+        Navigator.pushNamed(context, Routes.homePageLayout);
         });
       }
     }, child: Scaffold(
-      backgroundColor: Color(0xFF004182),
+      backgroundColor: const Color(0xFF004182),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -76,13 +76,13 @@ class _LoginViewState extends State<LoginView> {
               height: 30.h,
             ),
             Form(
-              key: viewModel.formKey,
+              key: BlocProvider.of<LoginScreenViewModel>(context).formKey,
               child: Column(
                 children: [
                   CustomTextFormField(
                     fieldText: 'E-mail',
                     hintText: 'enter your email',
-                    controller: viewModel.emailController,
+                    controller: BlocProvider.of<LoginScreenViewModel>(context).emailController,
                     validator: (value) {
                       if (value == null || value
                           .trim()
@@ -95,17 +95,17 @@ class _LoginViewState extends State<LoginView> {
                   CustomTextFormField(
                     fieldText: 'Password',
                     hintText: 'enter your password',
-                    isObsecure: viewModel.isObscure,
+                    isObscure: BlocProvider.of<LoginScreenViewModel>(context).isObscure,
                     suffixIcon: InkWell(
-                      child: viewModel.isObscure
-                          ? Icon(Icons.visibility)
-                          : Icon(Icons.visibility_off),
+                      child: BlocProvider.of<LoginScreenViewModel>(context).isObscure
+                          ? const Icon(Icons.visibility)
+                          : const Icon(Icons.visibility_off),
                       onTap: () {
-                        viewModel.isObscure = !viewModel.isObscure;
+                        BlocProvider.of<LoginScreenViewModel>(context).isObscure = !BlocProvider.of<LoginScreenViewModel>(context).isObscure;
                         setState(() {});
                       },
                     ),
-                    controller: viewModel.passwordController,
+                    controller: BlocProvider.of<LoginScreenViewModel>(context).passwordController,
                     validator: (value) {
                       if (value == null || value
                           .trim()
@@ -136,25 +136,25 @@ class _LoginViewState extends State<LoginView> {
             Padding(
               padding: EdgeInsets.only(
                   top: 60.h, left: 16.w, right: 16.w, bottom: 10.h),
-              child: Container(
+              child: SizedBox(
                 height: 65.h,
                 child: ElevatedButton(
                   onPressed: () {
-                    viewModel.login();
+                    BlocProvider.of<LoginScreenViewModel>(context).login();
                     },
+                  style: ElevatedButton.styleFrom(
+                    side: const BorderSide(),
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.r),
+                    ),
+                  ),
                   child: Text(
                     'Log in',
                     style: Theme
                         .of(context)
                         .textTheme
                         .bodyLarge,
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    side: BorderSide(),
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.r),
-                    ),
                   ),
                 ),
               ),
@@ -163,7 +163,7 @@ class _LoginViewState extends State<LoginView> {
               padding: EdgeInsets.only(bottom: 40.h),
               child: TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, RegisterView.routeName);
+                    Navigator.pushNamed(context, Routes.signInScreen);
                   },
                   child: Text(
                     'Don’t have an account? Create Account',

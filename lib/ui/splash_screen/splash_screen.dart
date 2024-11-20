@@ -1,13 +1,15 @@
 import 'dart:async';
-import 'package:ecommerce_app/ui/home_screen/home_screen_view.dart';
+import 'package:ecommerce_app/core/routing/routes_names.dart';
+import 'package:ecommerce_app/ui/home_screen/home_page_layout.dart';
 import 'package:ecommerce_app/ui/login/login_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/cach_helper/cach_helper.dart';
-import '../register/register_view.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String routeName='splash_screen';
+
+  const SplashScreen({super.key});
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
@@ -15,13 +17,13 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Timer(Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 3), () {
       var token=CacheHelper.getData(key: 'token');
       if(token==null){
-        Navigator.pushReplacementNamed(context, LoginView.routeName);
+        Navigator.pushReplacementNamed(context, Routes.loginScreen);
       }
       else{
-        Navigator.pushReplacementNamed(context, HomeView.routeName);
+        Navigator.pushReplacementNamed(context,Routes.homePageLayout);
       }
 
     });

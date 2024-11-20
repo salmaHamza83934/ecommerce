@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../core/theme/Colors.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_text_styles.dart';
 import '../../../domain/entities/GetCartRespnseEntity.dart';
 import 'cart_counter.dart';
 
@@ -11,13 +12,12 @@ class CartItem extends StatelessWidget {
   Function updateCount;
 
   CartItem(
-      {required this.cartEntity,
+      {super.key, required this.cartEntity,
       required this.deleteItem,
       required this.updateCount});
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Container(
@@ -42,9 +42,9 @@ class CartItem extends StatelessWidget {
                     if (loadingProgress == null) {
                       return child;
                     } else {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(
-                          color: AppColors.primaryColor,
+                          color: AppColors.magentaDye,
                         ),
                       );
                     }
@@ -68,17 +68,17 @@ class CartItem extends StatelessWidget {
                       width: 150.w,
                       child: Text(
                         cartEntity.product?.title ?? '',
-                        style: theme.textTheme.bodyMedium!
-                            .copyWith(color: theme.primaryColor),
+                        style: AppTextStyles.font16DelftBlue.copyWith(color: AppColors.delftBlue),
+
                         overflow: TextOverflow.ellipsis,
                       )),
-                  Spacer(),
+                  const Spacer(),
                   Text(
                     "in stock:  ${cartEntity.product!.quantity.toString()}",
-                    style: theme.textTheme.bodySmall!
-                        .copyWith(color: AppColors.greyColor),
+                    style: AppTextStyles.font14White.copyWith(color: AppColors.slateGrey),
+
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Text(
                     "EGP  ${cartEntity.price}",
                     overflow: TextOverflow.ellipsis,
@@ -86,7 +86,7 @@ class CartItem extends StatelessWidget {
                 ],
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 8.w),
               child: Column(
@@ -96,11 +96,11 @@ class CartItem extends StatelessWidget {
                     onTap: deleteItem,
                     child: Icon(
                       Icons.delete_forever_outlined,
-                      color: AppColors.primaryColor,
+                      color: AppColors.magentaDye,
                       size: 40.r,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   CartCounter(
                     onCounterChanged: (count) {
                       cartEntity.count = count;

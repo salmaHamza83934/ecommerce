@@ -4,7 +4,6 @@ import 'package:ecommerce_app/data/api/base_error.dart';
 import 'package:ecommerce_app/domain/entities/AddRemoveWishlistResponseEntity.dart';
 import 'package:ecommerce_app/domain/entities/GetWishlistResponseEntity.dart';
 import 'package:ecommerce_app/domain/repository/data_source/wishlist_remote_data_source.dart';
-import 'package:ecommerce_app/domain/repository/repository/wishlist_repository_contract.dart';
 
 class WishlistRemoteDataSourceImp extends WishlistRemoteDataSource{
   ApiManager apiManager;

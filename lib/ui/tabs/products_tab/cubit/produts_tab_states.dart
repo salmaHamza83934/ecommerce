@@ -4,7 +4,6 @@ import 'package:ecommerce_app/domain/entities/GetWishlistResponseEntity.dart';
 import 'package:ecommerce_app/domain/entities/ProductsResponseEntity.dart';
 
 import '../../../../data/api/base_error.dart';
-import '../../../../domain/entities/CategoryOrBrandsResponseEntity.dart';
 
 abstract class ProductsTabStates{}
 

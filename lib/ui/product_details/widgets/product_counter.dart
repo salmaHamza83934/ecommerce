@@ -1,20 +1,23 @@
+import 'package:ecommerce_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../core/theme/app_text_styles.dart';
 
 class ProductCounter extends StatefulWidget {
   final Function(int) onCounterChanged;
 
-  ProductCounter(this.onCounterChanged);
+  const ProductCounter(this.onCounterChanged, {super.key});
 
   @override
   State<ProductCounter> createState() => _ProductCounterState();
 }
 
 class _ProductCounterState extends State<ProductCounter> {
-  int counter=1;
+  int counter = 1;
+
   @override
   Widget build(BuildContext context) {
-    var theme=Theme.of(context);
     void incrementCounter() {
       setState(() {
         counter++;
@@ -30,12 +33,13 @@ class _ProductCounterState extends State<ProductCounter> {
         });
       }
     }
+
     return Container(
       width: 130.w,
       height: 45.h,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20.r),
-          color: theme.primaryColor),
+          color: AppColors.magentaHaze),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -50,14 +54,14 @@ class _ProductCounterState extends State<ProductCounter> {
               size: 30.r,
             ),
           ),
-          Spacer(),
+          const Spacer(),
           Text(
             '$counter',
-            style: theme.textTheme.bodyMedium!
-                .copyWith(color: Colors.white),
+            style: AppTextStyles.font16DelftBlue.copyWith(color: Colors.white),
           ),
-          Spacer(),
-          GestureDetector(onTap: incrementCounter,
+          const Spacer(),
+          GestureDetector(
+            onTap: incrementCounter,
             child: Icon(
               Icons.add_circle_outline,
               color: Colors.white,

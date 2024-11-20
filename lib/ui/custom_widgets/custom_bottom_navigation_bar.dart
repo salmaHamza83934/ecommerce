@@ -1,72 +1,75 @@
-import 'package:ecommerce_app/core/asset_data/assets_img.dart';
+import 'package:ecommerce_app/core/theme/app_colors.dart';
 import 'package:ecommerce_app/core/theme/theme.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 Widget buildCustomNavigationBar(
     {required int selectedIndex,
     required Function(int) onTapFunction,
     required BuildContext context}) {
-  return ClipRRect(
-    borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(20.r), topRight: Radius.circular(20.r)),
-    child: BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      backgroundColor: AppTheme.primaryColor,
-      showSelectedLabels: false,
-      showUnselectedLabels: false,
-      currentIndex: selectedIndex,
-      onTap: onTapFunction,
-      items: [
-        BottomNavigationBarItem(icon: CircleAvatar(
-          foregroundColor: selectedIndex ==0 ?AppTheme.primaryColor : Colors.white,
-          backgroundColor: selectedIndex ==0?Colors.white:Colors.transparent,
-          radius: 20.r,
-          child: ImageIcon(
-            size: 40.sp,
-            const AssetImage(
-              MyAssets.notSelectedHomeIcon,
+  return Stack(
+    children: [
+      Container(
+        padding: EdgeInsets.symmetric(vertical: 15.h),
+        margin:  EdgeInsets.symmetric(vertical: 10.h,horizontal: 10.w),
+        decoration: BoxDecoration(
+          color: AppColors.magentaHaze,
+          borderRadius: BorderRadius.all(Radius.circular(25.r)),
+          boxShadow:const [ BoxShadow(
+            color: Colors.grey,
+            blurRadius: 20,
+            offset: Offset(3, 8),
+          )]
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            _buildNavItem(
+              context: context,
+              icon: Icons.home_rounded,iconSize: 35.r,
+              isSelected: selectedIndex == 0,
+              onTap: () => onTapFunction(0),
             ),
-          ),
-        ),label: 'HOME'),
-
-        BottomNavigationBarItem(icon: CircleAvatar(
-          foregroundColor: selectedIndex ==1 ?AppTheme.primaryColor : Colors.white,
-          backgroundColor: selectedIndex ==1?Colors.white:Colors.transparent,
-          radius: 20.r,
-          child: ImageIcon(
-            size: 40.sp,
-            const AssetImage(
-              MyAssets.notSelectedCategoryIcon,
+            _buildNavItem(
+              context: context,
+              icon: FontAwesomeIcons.list,
+              isSelected: selectedIndex == 1,
+              onTap: () => onTapFunction(1),
             ),
-          ),
-        ),label: 'CATEGORY'),
-
-        BottomNavigationBarItem(icon: CircleAvatar(
-          foregroundColor: selectedIndex ==2 ?AppTheme.primaryColor : Colors.white,
-          backgroundColor: selectedIndex ==2?Colors.white:Colors.transparent,
-          radius: 20.r,
-          child: ImageIcon(
-            size: 40.sp,
-            const AssetImage(
-              MyAssets.notSelectedWishlistIcon,
+            _buildNavItem(
+              context: context,
+              icon: FontAwesomeIcons.heart,
+              isSelected: selectedIndex == 2,
+              onTap: () => onTapFunction(2),
             ),
-          ),
-        ),label: 'WISHLIST'),
-
-        BottomNavigationBarItem(icon: CircleAvatar(
-          foregroundColor: selectedIndex ==3 ?AppTheme.primaryColor : Colors.white,
-          backgroundColor: selectedIndex ==3 ?Colors.white:Colors.transparent,
-          radius: 20.r,
-          child: ImageIcon(
-            size: 40.sp,
-            const AssetImage(
-              MyAssets.notSelectedProfileIcon,
+            _buildNavItem(
+              context: context,
+              icon: FontAwesomeIcons.user,
+              isSelected: selectedIndex == 3,
+              onTap: () => onTapFunction(3),
             ),
-          ),
-        ),label: 'Profile'),
-      ],
-    ),
+          ],
+        ),
+      ),
+    ],
   );
+
+
+}
+Widget _buildNavItem({
+  required BuildContext context,
+  required IconData icon,
+  required bool isSelected,
+  required VoidCallback onTap,
+  double? iconSize,
+}) {
+  return GestureDetector(
+    onTap: onTap,
+    child: CircleAvatar(
+      foregroundColor: isSelected ? AppColors.magentaHaze : Colors.white,
+      backgroundColor: isSelected ? Colors.white : Colors.transparent,
+      radius: 22.r,
+      child: Center(child: Icon(icon,size: iconSize??25.r,)),
+  ));
 }

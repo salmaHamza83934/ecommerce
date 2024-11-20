@@ -1,4 +1,6 @@
-import 'package:ecommerce_app/data/di.dart';
+import 'package:ecommerce_app/core/routing/routes_names.dart';
+import 'package:ecommerce_app/core/di.dart';
+import 'package:ecommerce_app/core/theme/app_text_styles.dart';
 import 'package:ecommerce_app/ui/dialog_utils.dart';
 import 'package:ecommerce_app/ui/login/login_view.dart';
 import 'package:flutter/material.dart';
@@ -11,18 +13,18 @@ import 'cubit/register_states.dart';
 import 'cubit/reigister_view_model.dart';
 
 class RegisterView extends StatefulWidget {
-  static const String routeName = 'signup_view';
+
+  const RegisterView({super.key});
 
   @override
   State<RegisterView> createState() => _RegisterViewState();
 }
 
 class _RegisterViewState extends State<RegisterView> {
-  RegisterScreenViewModel viewModel =RegisterScreenViewModel(registerUseCase: injectRegisterUseCase());
   @override
   Widget build(BuildContext context) {
     return BlocListener<RegisterScreenViewModel,RegisterStates>(
-        bloc: viewModel,listener: (context,state){
+        listener: (context,state){
           if(state is RegisterLoadingState){
             DialogUtils.showLoading(context, 'Waiting');
           }
@@ -35,15 +37,15 @@ class _RegisterViewState extends State<RegisterView> {
             DialogUtils.showMessage(context, state.response.userEntity?.name??'');
             CacheHelper.saveData(key: 'name', value: state.response.userEntity?.name);
             CacheHelper.saveData(key: 'email', value: state.response.userEntity?.email);
-            CacheHelper.saveData(key: 'phone', value: viewModel.mobileNumberController.text);
-            Future.delayed(Duration(seconds: 2),(){
-              Navigator.pushNamed(context, LoginView.routeName);
+            CacheHelper.saveData(key: 'phone', value: BlocProvider.of<RegisterScreenViewModel>(context).mobileNumberController.text);
+            Future.delayed(const Duration(seconds: 2),(){
+              Navigator.pushNamed(context, Routes.loginScreen);
             });
           }
     },
     child: Scaffold(
       body: Container(
-        color: Color(0xFF004182),
+        color: const Color(0xFF004182),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -54,13 +56,13 @@ class _RegisterViewState extends State<RegisterView> {
                 child: Image.asset('assets/images/route.png'),
               ),
               Form(
-                key: viewModel.formKey,
+                key: BlocProvider.of<RegisterScreenViewModel>(context).formKey,
                 child: Column(
                   children: [
                     CustomTextFormField(
                       fieldText: 'Full Name',
                       hintText: 'enter your full name',
-                      controller: viewModel.usernameController,
+                      controller: BlocProvider.of<RegisterScreenViewModel>(context).usernameController,
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
                           return 'Enter your name';
@@ -71,7 +73,7 @@ class _RegisterViewState extends State<RegisterView> {
                     CustomTextFormField(
                       fieldText: 'Mobile Number',
                       hintText: 'enter your mobile no.',
-                      controller: viewModel.mobileNumberController,
+                      controller: BlocProvider.of<RegisterScreenViewModel>(context).mobileNumberController,
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
                           return 'Enter your mobile number';
@@ -82,7 +84,7 @@ class _RegisterViewState extends State<RegisterView> {
                     CustomTextFormField(
                       fieldText: 'E-mail address',
                       hintText: 'enter your email address',
-                      controller: viewModel.emailController,
+                      controller: BlocProvider.of<RegisterScreenViewModel>(context).emailController,
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
                           return 'Enter your email';
@@ -99,17 +101,17 @@ class _RegisterViewState extends State<RegisterView> {
                     CustomTextFormField(
                       fieldText: 'Password',
                       hintText: 'enter your password',
-                      isObsecure: viewModel.isObscure,
+                      isObscure: BlocProvider.of<RegisterScreenViewModel>(context).isObscure,
                       suffixIcon: InkWell(
-                        child: viewModel.isObscure
-                            ? Icon(Icons.visibility)
-                            : Icon(Icons.visibility_off),
+                        child: BlocProvider.of<RegisterScreenViewModel>(context).isObscure
+                            ? const Icon(Icons.visibility)
+                            : const Icon(Icons.visibility_off),
                         onTap: () {
-                          viewModel.isObscure = !viewModel.isObscure;
+                          BlocProvider.of<RegisterScreenViewModel>(context).isObscure = !BlocProvider.of<RegisterScreenViewModel>(context).isObscure;
                           setState(() {});
                         },
                       ),
-                      controller: viewModel.passwordController,
+                      controller: BlocProvider.of<RegisterScreenViewModel>(context).passwordController,
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
                           return 'Enter your password';
@@ -120,17 +122,17 @@ class _RegisterViewState extends State<RegisterView> {
                     CustomTextFormField(
                       fieldText: 'Confirm Password',
                       hintText: 'confirm your password',
-                      isObsecure: viewModel.isObscure,
+                      isObscure: BlocProvider.of<RegisterScreenViewModel>(context).isObscure,
                       suffixIcon: InkWell(
-                        child: viewModel.isObscure
-                            ? Icon(Icons.visibility)
-                            : Icon(Icons.visibility_off),
+                        child: BlocProvider.of<RegisterScreenViewModel>(context).isObscure
+                            ? const Icon(Icons.visibility)
+                            : const Icon(Icons.visibility_off),
                         onTap: () {
-                          viewModel.isObscure = !viewModel.isObscure;
+                          BlocProvider.of<RegisterScreenViewModel>(context).isObscure = !BlocProvider.of<RegisterScreenViewModel>(context).isObscure;
                           setState(() {});
                         },
                       ),
-                      controller: viewModel.confirmPasswordController,
+                      controller: BlocProvider.of<RegisterScreenViewModel>(context).confirmPasswordController,
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
                           return 'Enter your password';
@@ -143,25 +145,25 @@ class _RegisterViewState extends State<RegisterView> {
               ),
               Padding(
                 padding: EdgeInsets.only(top: 30.h,left: 16.w,right: 16.w,bottom: 20.h),
-                child: Container(
+                child: SizedBox(
                   height: 65.h,
                   child: ElevatedButton(
                     onPressed: () {
-                      if (viewModel.formKey.currentState?.validate() == true){
-                        viewModel.register();
+                      if (BlocProvider.of<RegisterScreenViewModel>(context).formKey.currentState?.validate() == true){
+                        BlocProvider.of<RegisterScreenViewModel>(context).register();
                       }
                     },
-                    child: Text(
-                      'Sign Up',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
                     style: ElevatedButton.styleFrom(
-                      side: BorderSide(
+                      side: const BorderSide(
                       ),
                       backgroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.r),
                       ),
+                    ),
+                    child: Text(
+                      'Sign Up',
+                      style: AppTextStyles.font20MagentaHaze,
                     ),
                   ),
                 ),

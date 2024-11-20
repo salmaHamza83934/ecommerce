@@ -1,13 +1,6 @@
-import 'package:ecommerce_app/domain/entities/AddToCartEntity.dart';
-import 'package:ecommerce_app/domain/entities/CategoryOrBrandsResponseEntity.dart';
-import 'package:ecommerce_app/domain/entities/ProductsResponseEntity.dart';
 import 'package:ecommerce_app/domain/use_cases/get_cart_use_case.dart';
-import 'package:ecommerce_app/domain/use_cases/get_products_usecase.dart';
-import 'package:ecommerce_app/ui/home_screen/cubit/home_screen_view_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../domain/use_cases/add_to_cart_usecase.dart';
-import '../../../../domain/use_cases/get_brands_usecase.dart';
-import '../../../../domain/use_cases/get_categories_usecase.dart';
 import '../../../domain/entities/GetCartRespnseEntity.dart';
 import '../../../domain/use_cases/delete_cart_item_use_case.dart';
 import '../../../domain/use_cases/update_count_cart_use_case.dart';
@@ -24,9 +17,6 @@ class CartTabViewModel extends Cubit<CartStates>{
   num? cartTotalPrice;
   int numOfCartItems=0;
 
-  static CartTabViewModel get(context)=>BlocProvider.of(context);
-
-
   void getCartItems() async{
     emit(GetCartLoadingState('Loading...'));
     var either=await getCartUseCase.invoke();
@@ -36,7 +26,6 @@ class CartTabViewModel extends Cubit<CartStates>{
       cartTotalPrice=response.data?.totalCartPrice;
       numOfCartItems=response.numOfCartItems??0;
       cartProducts=response.data?.products??[];
-      print(numOfCartItems);
       emit(GetCartSuccessState(response));
     });
   }
@@ -48,7 +37,6 @@ class CartTabViewModel extends Cubit<CartStates>{
       emit(AddToCartErrorState(l));
     }, (response) {
       numOfCartItems=response.numOfCartItems??0;
-      print(numOfCartItems);
       emit(AddToCartSuccessState(response));
     });
   }

@@ -1,3 +1,5 @@
+import 'package:ecommerce_app/core/theme/app_colors.dart';
+import 'package:ecommerce_app/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -6,11 +8,10 @@ class ProfileItem extends StatelessWidget {
   String fieldTxt;
 
 
-  ProfileItem(this.fieldName, this.fieldTxt);
+  ProfileItem(this.fieldName, this.fieldTxt, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    var theme=Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -28,9 +29,9 @@ class ProfileItem extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Text(fieldTxt,overflow: TextOverflow.ellipsis,style: theme.textTheme.bodyMedium!.copyWith(fontSize: 15.sp),),
-              Spacer(),
-              Icon(Icons.edit,color: theme.primaryColor,)
+              Text(fieldTxt,overflow: TextOverflow.ellipsis,style: AppTextStyles.font16DelftBlue),
+              const Spacer(),
+              const Icon(Icons.edit,color:AppColors.delftBlue)
             ],
           ),
         ),
