@@ -1,15 +1,11 @@
 import 'package:ecommerce_app/core/cach_helper/cach_helper.dart';
 import 'package:ecommerce_app/core/routing/routes_names.dart';
-import 'package:ecommerce_app/core/di.dart';
-import 'package:ecommerce_app/ui/home_screen/home_page_layout.dart';
 import 'package:ecommerce_app/ui/login/cubit/login_states.dart';
 import 'package:ecommerce_app/ui/login/cubit/login_view_model.dart';
-import 'package:ecommerce_app/ui/register/register_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../custom_widgets/custom_text_form_field.dart';
+import '../../core/shared_widgets/app_text_form_field.dart';
 import '../dialog_utils.dart';
 
 class LoginView extends StatefulWidget {
@@ -79,7 +75,7 @@ class _LoginViewState extends State<LoginView> {
               key: BlocProvider.of<LoginScreenViewModel>(context).formKey,
               child: Column(
                 children: [
-                  CustomTextFormField(
+                  AppTextFormField(
                     fieldText: 'E-mail',
                     hintText: 'enter your email',
                     controller: BlocProvider.of<LoginScreenViewModel>(context).emailController,
@@ -92,7 +88,7 @@ class _LoginViewState extends State<LoginView> {
                       return null;
                     },
                   ),
-                  CustomTextFormField(
+                  AppTextFormField(
                     fieldText: 'Password',
                     hintText: 'enter your password',
                     isObscure: BlocProvider.of<LoginScreenViewModel>(context).isObscure,

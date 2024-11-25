@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'package:ecommerce_app/core/routing/routes_names.dart';
-import 'package:ecommerce_app/ui/home_screen/home_page_layout.dart';
-import 'package:ecommerce_app/ui/login/login_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/cach_helper/cach_helper.dart';

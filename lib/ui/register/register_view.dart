@@ -1,14 +1,11 @@
 import 'package:ecommerce_app/core/routing/routes_names.dart';
-import 'package:ecommerce_app/core/di.dart';
 import 'package:ecommerce_app/core/theme/app_text_styles.dart';
 import 'package:ecommerce_app/ui/dialog_utils.dart';
-import 'package:ecommerce_app/ui/login/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../core/cach_helper/cach_helper.dart';
-import '../custom_widgets/custom_text_form_field.dart';
+import '../../core/shared_widgets/app_text_form_field.dart';
 import 'cubit/register_states.dart';
 import 'cubit/reigister_view_model.dart';
 
@@ -59,7 +56,7 @@ class _RegisterViewState extends State<RegisterView> {
                 key: BlocProvider.of<RegisterScreenViewModel>(context).formKey,
                 child: Column(
                   children: [
-                    CustomTextFormField(
+                    AppTextFormField(
                       fieldText: 'Full Name',
                       hintText: 'enter your full name',
                       controller: BlocProvider.of<RegisterScreenViewModel>(context).usernameController,
@@ -70,7 +67,7 @@ class _RegisterViewState extends State<RegisterView> {
                         return null;
                       },
                     ),
-                    CustomTextFormField(
+                    AppTextFormField(
                       fieldText: 'Mobile Number',
                       hintText: 'enter your mobile no.',
                       controller: BlocProvider.of<RegisterScreenViewModel>(context).mobileNumberController,
@@ -81,7 +78,7 @@ class _RegisterViewState extends State<RegisterView> {
                         return null;
                       },
                     ),
-                    CustomTextFormField(
+                    AppTextFormField(
                       fieldText: 'E-mail address',
                       hintText: 'enter your email address',
                       controller: BlocProvider.of<RegisterScreenViewModel>(context).emailController,
@@ -98,7 +95,7 @@ class _RegisterViewState extends State<RegisterView> {
                         return null;
                       },
                     ),
-                    CustomTextFormField(
+                    AppTextFormField(
                       fieldText: 'Password',
                       hintText: 'enter your password',
                       isObscure: BlocProvider.of<RegisterScreenViewModel>(context).isObscure,
@@ -119,7 +116,7 @@ class _RegisterViewState extends State<RegisterView> {
                         return null;
                       },
                     ),
-                    CustomTextFormField(
+                    AppTextFormField(
                       fieldText: 'Confirm Password',
                       hintText: 'confirm your password',
                       isObscure: BlocProvider.of<RegisterScreenViewModel>(context).isObscure,

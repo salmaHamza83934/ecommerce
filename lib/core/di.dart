@@ -1,9 +1,6 @@
 import 'package:ecommerce_app/ui/cart_screen/cubit/cart_view_model.dart';
-import 'package:ecommerce_app/ui/home_screen/cubit/home_screen_view_model.dart';
 import 'package:ecommerce_app/ui/login/cubit/login_view_model.dart';
 import 'package:ecommerce_app/ui/register/cubit/reigister_view_model.dart';
-import 'package:ecommerce_app/ui/tabs/home_tab/cubit/home_tab_view_model.dart';
-import 'package:ecommerce_app/ui/tabs/products_tab/cubit/produts_tab_view_model.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ecommerce_app/data/api/api_manager.dart';
 import 'package:ecommerce_app/data/repository/data_source/auth_remote_data_source_imp.dart';
@@ -36,6 +33,10 @@ import 'package:ecommerce_app/domain/use_cases/update_count_cart_use_case.dart';
 import 'package:ecommerce_app/domain/use_cases/delete_cart_item_use_case.dart';
 import 'package:http/http.dart';
 
+import '../ui/home_layout/cubit/home_screen_view_model.dart';
+import '../ui/home_layout/tabs/home_tab/cubit/home_tab_view_model.dart';
+import '../ui/home_layout/tabs/products_tab/cubit/produts_tab_view_model.dart';
+
 // Initialize GetIt instance
 final GetIt getIt = GetIt.instance;
 
@@ -48,8 +49,8 @@ Future<void> setupDependencies() async {
           () => AuthRemoteDataSourceImp(apiManager: getIt()));
   getIt.registerLazySingleton<AuthRepositoryContract>(
           () => AuthRepositoryImp(getIt()));
-  getIt.registerFactory(() => RegisterUseCase(getIt()));
-  getIt.registerFactory(() => LoginUseCase(getIt()));
+  getIt.registerLazySingleton(() => RegisterUseCase(getIt()));
+  getIt.registerLazySingleton(() => LoginUseCase(getIt()));
   getIt.registerFactory<LoginScreenViewModel>(
           () => LoginScreenViewModel(loginUseCase: getIt()));
   getIt.registerFactory<RegisterScreenViewModel>(
@@ -60,10 +61,10 @@ Future<void> setupDependencies() async {
           () => HomeRemoteDataSourceImpl(getIt()));
   getIt.registerLazySingleton<HomeRepositoryContract>(
           () => HomeRepositoryImpl(getIt()));
-  getIt.registerFactory(() => GetCategoriesUseCase(getIt()));
-  getIt.registerFactory(() => GetProductsUseCase(getIt()));
-  getIt.registerFactory(() => GetCategoryProductUseCase(getIt()));
-  getIt.registerFactory(() => AddToCartUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetCategoriesUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetProductsUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetCategoryProductUseCase(getIt()));
+  getIt.registerLazySingleton(() => AddToCartUseCase(getIt()));
   getIt.registerFactory<HomeTabViewModel>(
           () =>
           HomeTabViewModel(getProductsUseCase: getIt(),
@@ -78,9 +79,9 @@ Future<void> setupDependencies() async {
           () => CartRemoteDataSourceImp(getIt()));
   getIt.registerLazySingleton<CartRepositoryContract>(
           () => CartRepositoryImp(getIt()));
-  getIt.registerFactory(() => GetCartUseCase(getIt()));
-  getIt.registerFactory(() => DeleteCartItemUseCase(getIt()));
-  getIt.registerFactory(() => UpdateCountCartUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetCartUseCase(getIt()));
+  getIt.registerLazySingleton(() => DeleteCartItemUseCase(getIt()));
+  getIt.registerLazySingleton(() => UpdateCountCartUseCase(getIt()));
   getIt.registerFactory(() =>
       CartTabViewModel(addToCartUseCase: getIt(),
           getCartUseCase: getIt(),
@@ -92,9 +93,9 @@ Future<void> setupDependencies() async {
           () => WishlistRemoteDataSourceImp(getIt()));
   getIt.registerLazySingleton<WishlistRepositoryContract>(
           () => WishlistRepositoryImp(getIt()));
-  getIt.registerFactory(() => AddToWishlistUseCase(getIt()));
-  getIt.registerFactory(() => RemoveFromWishlistUseCase(getIt()));
-  getIt.registerFactory(() => GetWishlistUseCase(getIt()));
+  getIt.registerLazySingleton(() => AddToWishlistUseCase(getIt()));
+  getIt.registerLazySingleton(() => RemoveFromWishlistUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetWishlistUseCase(getIt()));
 
 
   getIt.registerFactory<ProductsTabViewModel>(() =>
