@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_text_styles.dart';
 
 class PriceAndCheckoutLine extends StatelessWidget {
   String price;
@@ -31,7 +32,7 @@ class PriceAndCheckoutLine extends StatelessWidget {
           ),
           Container(
             decoration: BoxDecoration(
-                color: AppColors.magentaDye,
+                color: AppColors.magentaHaze,
                 borderRadius: BorderRadius.circular(16.r)),
             width: 250.w,
             height: 50.h,
@@ -39,10 +40,7 @@ class PriceAndCheckoutLine extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text('Check Out',
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .bodyMedium!
+                    style: AppTextStyles.font16DelftBlue
                         .copyWith(color: Colors.white)),
                 SizedBox(
                   width: 15.w,

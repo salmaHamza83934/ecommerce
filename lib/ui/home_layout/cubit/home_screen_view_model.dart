@@ -12,7 +12,7 @@ static HomeScreenViewModel get(context)=>BlocProvider.of(context);
   int selectedIndex = 0;
   List<Widget> tabs = [
     HomeTab(),
-    const ProductListTab(),
+    ProductListTab(),
     WishlistTab(),
     const ProfileTab()
   ];

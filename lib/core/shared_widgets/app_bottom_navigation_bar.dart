@@ -19,7 +19,7 @@ Widget buildCustomNavigationBar(
           boxShadow:const [ BoxShadow(
             color: Colors.grey,
             blurRadius: 20,
-            offset: Offset(3, 8),
+            offset: Offset(3, 6),
           )]
         ),
         child: Row(

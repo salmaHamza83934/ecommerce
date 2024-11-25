@@ -25,34 +25,59 @@ class ProfileTab extends StatelessWidget {
                     Text('Welcome, ${CacheHelper.getData(key: 'name')}'),
                     Text(
                       '${CacheHelper.getData(key: 'email')}',
-                      style: AppTextStyles.font14White.copyWith(color: AppColors.frenchGrey),
+                      style: AppTextStyles.font14White
+                          .copyWith(color: AppColors.frenchGrey),
                     ),
                   ],
                 ),
-                const Spacer(),
-                IconButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, Routes.loginScreen);
-                      CacheHelper.removeData(key: 'token');
-                      CacheHelper.removeData(key: 'email');
-                      CacheHelper.removeData(key: 'name');
-                      CacheHelper.removeData(key: 'phone');
-                    },
-                    icon: Icon(Icons.logout_outlined,size: 30.r,color: AppColors.delftBlue,)),
               ],
             ),
             SizedBox(
               height: 40.h,
             ),
-            ProfileItem('Your full name', '${CacheHelper.getData(key: 'name')}'),
+            ProfileItem(
+                'Your full name', '${CacheHelper.getData(key: 'name')}'),
             ProfileItem('Your E-mail', '${CacheHelper.getData(key: 'email')}'),
-            ProfileItem('Your password', '*****************'),
             ProfileItem(
                 'Your mobile number',
                 CacheHelper.getData(key: 'phone') == null
                     ? '1111111111111'
                     : '${CacheHelper.getData(key: 'phone')}'),
-            ProfileItem('Your Address', 'No Address Found'),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 12.h),
+                decoration: BoxDecoration(
+                    color: AppColors.magentaHaze,
+                    borderRadius: BorderRadius.circular(16.r)),
+                width: 200.w,
+                height: 50.h,
+                child: GestureDetector(
+                  onTap: (){
+                    Navigator.pushNamed(context, Routes.loginScreen);
+                    CacheHelper.removeData(key: 'token');
+                    CacheHelper.removeData(key: 'email');
+                    CacheHelper.removeData(key: 'name');
+                    CacheHelper.removeData(key: 'phone');
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Log Out',
+                          style: AppTextStyles.font16DelftBlue
+                              .copyWith(color: Colors.white)),
+                      SizedBox(
+                        width: 15.w,
+                      ),
+                      const Icon(
+                        Icons.logout,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/ui/register/cubit/register_states.dart';
+import 'package:ecommerce_app/ui/signup_screen/cubit/register_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
