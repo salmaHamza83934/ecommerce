@@ -54,13 +54,7 @@ class CategoryItemWidget extends StatelessWidget {
                   Text(
                     BlocProvider.of<HomeTabViewModel>(context)
                                 .categoryEntity[index]
-                                .name ==
-                            "Baby & Toys"
-                        ? "Kids & Toys"
-                        : BlocProvider.of<HomeTabViewModel>(context)
-                                .categoryEntity[index]
-                                .name ??
-                            "",
+                                .name.toString(),
                     style: AppTextStyles.font14White.copyWith(
                       color: AppColors.delftBlue,
                       overflow: TextOverflow.ellipsis,
@@ -87,7 +81,7 @@ class CategoryItemWidget extends StatelessWidget {
         return AssetImages.menIcon;
       case "Women's Fashion":
         return AssetImages.womenIcon;
-      case "Baby & Toys":
+      case "Kids & Toys":
         return AssetImages.kidsIcon;
       default:
         return AssetImages.electronicsIcon; // Fallback for unknown categories

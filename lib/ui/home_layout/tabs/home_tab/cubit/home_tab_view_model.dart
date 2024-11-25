@@ -33,11 +33,12 @@ class HomeTabViewModel extends Cubit<HomeTabStates> {
           final filteredCategories = response.data!.where((category) {
             return category.name == 'Men\'s Fashion' ||
                 category.name == 'Women\'s Fashion' ||
-                category.name == 'Baby & Toys' ||
+                (category.name == 'Baby & Toys') ||
                 category.name == 'Electronics';
           }).toSet();
-          // Update the categoryEntity list while ensuring no duplicates
+
           for (var category in filteredCategories) {
+            category.name=='Baby & Toys'?category.name='Kids & Toys':null;
             if (!categoryEntity.any((existing) => existing.id == category.id)) {
               categoryEntity.add(category);
             }

@@ -25,7 +25,6 @@ class ProductsTabViewModel extends Cubit<ProductsTabStates> {
 
   Set<String> favouriteProductIds = <String>{};
   List<ProductEntity> products = [];
-  int numOfCartItems = 0;
   bool isFavourite = false;
   List<ProductEntity> filteredProducts = [];
 
@@ -43,7 +42,6 @@ class ProductsTabViewModel extends Cubit<ProductsTabStates> {
             .where((product) => product.title!.toLowerCase().contains(query.toLowerCase()))
             .toList();
       }
-      print(filteredProducts);
       emit(AllProductsSuccessState(response));
     });
   }
@@ -60,7 +58,6 @@ class ProductsTabViewModel extends Cubit<ProductsTabStates> {
       either.fold((l) {
         emit(AddToWishlistErrorState(l));
       }, (response) {
-        print(response.data?.length);
         emit(AddToWishlistSuccessState(response));
         getWishlist();
       });
@@ -72,7 +69,6 @@ class ProductsTabViewModel extends Cubit<ProductsTabStates> {
     either.fold((l) {
       emit(RemoveFromWishlistErrorState(l));
     }, (response) {
-      print(response.data?.length);
       favoriteProducts.removeWhere((product) => product.id == productId);
       favouriteProductIds.remove(productId);
       emit(RemoveWishlistSuccessState(response));
@@ -88,7 +84,6 @@ class ProductsTabViewModel extends Cubit<ProductsTabStates> {
     either.fold((l) {
       emit(GetWishlistErrorState(l));
     }, (response) {
-      print(response.data?.length);
       if (response.data?.length != 0) {
         favoriteProducts = response.data!;
         favouriteProductIds =

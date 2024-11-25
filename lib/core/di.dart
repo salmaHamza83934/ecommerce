@@ -1,6 +1,4 @@
 import 'package:ecommerce_app/ui/cart_screen/cubit/cart_view_model.dart';
-import 'package:ecommerce_app/ui/login/cubit/login_view_model.dart';
-import 'package:ecommerce_app/ui/register/cubit/reigister_view_model.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ecommerce_app/data/api/api_manager.dart';
 import 'package:ecommerce_app/data/repository/data_source/auth_remote_data_source_imp.dart';
@@ -36,6 +34,8 @@ import 'package:http/http.dart';
 import '../ui/home_layout/cubit/home_screen_view_model.dart';
 import '../ui/home_layout/tabs/home_tab/cubit/home_tab_view_model.dart';
 import '../ui/home_layout/tabs/products_tab/cubit/produts_tab_view_model.dart';
+import '../ui/login_screen/cubit/login_view_model.dart';
+import '../ui/signup_screen/cubit/reigister_view_model.dart';
 
 // Initialize GetIt instance
 final GetIt getIt = GetIt.instance;
