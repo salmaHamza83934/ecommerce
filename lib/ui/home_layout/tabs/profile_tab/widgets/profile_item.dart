@@ -30,8 +30,6 @@ class ProfileItem extends StatelessWidget {
           child: Row(
             children: [
               Text(fieldTxt,overflow: TextOverflow.ellipsis,style: AppTextStyles.font16DelftBlue),
-              const Spacer(),
-              const Icon(Icons.edit,color:AppColors.delftBlue)
             ],
           ),
         ),
