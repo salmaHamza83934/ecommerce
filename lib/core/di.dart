@@ -29,13 +29,11 @@ import 'package:ecommerce_app/domain/use_cases/register_usecase.dart';
 import 'package:ecommerce_app/domain/use_cases/remove_from_wishlist_use_case.dart';
 import 'package:ecommerce_app/domain/use_cases/update_count_cart_use_case.dart';
 import 'package:ecommerce_app/domain/use_cases/delete_cart_item_use_case.dart';
-import 'package:http/http.dart';
-
 import '../ui/home_layout/cubit/home_screen_view_model.dart';
 import '../ui/home_layout/tabs/home_tab/cubit/home_tab_view_model.dart';
 import '../ui/home_layout/tabs/products_tab/cubit/produts_tab_view_model.dart';
 import '../ui/login_screen/cubit/login_view_model.dart';
-import '../ui/signup_screen/cubit/reigister_view_model.dart';
+import '../ui/register_screen/cubit/register_view_model.dart';
 
 // Initialize GetIt instance
 final GetIt getIt = GetIt.instance;

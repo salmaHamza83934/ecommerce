@@ -1,37 +1,35 @@
+import 'package:ecommerce_app/core/theme/app_colors.dart';
+import 'package:ecommerce_app/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTextFormField extends StatelessWidget {
   String hintText;
   bool isObscure;
-  var validator;
+  String? Function(String?) validator;
   TextEditingController controller;
   Widget? suffixIcon;
   TextInputType keyboardType;
   String fieldText;
 
-  AppTextFormField(
-      {super.key,
-      required this.hintText,
-      this.isObscure = false,
-      required this.validator,
-      required this.controller,
-      this.suffixIcon,
-      required this.fieldText,
-      this.keyboardType = TextInputType.text});
+  AppTextFormField({super.key,
+    required this.hintText,
+    this.isObscure = false,
+    required this.validator,
+    required this.controller,
+    this.suffixIcon,
+    required this.fieldText,
+    this.keyboardType = TextInputType.text});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 16),
           child: Align(
               alignment: Alignment.topLeft,
               child: Text(fieldText,
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ))),
+                style: AppTextStyles.font16DelftBlue,)),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -40,20 +38,14 @@ class AppTextFormField extends StatelessWidget {
             decoration: InputDecoration(
               fillColor: Colors.white,
               filled: true,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15.r),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15.r),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15.r),
-              ),
+              border: const OutlineInputBorder(),
               hintText: hintText,
-              hintStyle: const TextStyle(color: Colors.grey),
+              hintStyle: AppTextStyles.font16DelftBlue.copyWith(
+                  color: AppColors.slateGrey),
               suffixIcon: suffixIcon,
             ),
-            style: const TextStyle(color: Colors.black),
+            style: AppTextStyles.font16DelftBlue.copyWith(
+                color: AppColors.delftBlue),
             obscureText: isObscure,
             controller: controller,
             validator: validator,

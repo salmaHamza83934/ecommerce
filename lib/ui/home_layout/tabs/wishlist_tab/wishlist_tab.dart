@@ -1,5 +1,5 @@
 import 'package:ecommerce_app/core/theme/app_text_styles.dart';
-import 'package:ecommerce_app/ui/home_layout/tabs/wishlist_tab/widgets/wishlist_item_widget.dart';
+import 'package:ecommerce_app/ui/home_layout/tabs/wishlist_tab/widgets/wishlist_listview_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,7 +9,7 @@ import '../products_tab/cubit/produts_tab_states.dart';
 import '../products_tab/cubit/produts_tab_view_model.dart';
 
 class WishlistTab extends StatelessWidget {
-  WishlistTab({super.key});
+  const WishlistTab({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class WishlistTab extends StatelessWidget {
                     .isNotEmpty
                 ? const Column(
                     children: [
-                      WishlistItemWidget(),
+                      WishlistListViewWidget(),
                     ],
                   )
                 : Center(

@@ -10,6 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProductListTab extends StatefulWidget {
+  const ProductListTab({super.key});
+
   @override
   State<ProductListTab> createState() => _ProductListTabState();
 }

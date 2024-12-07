@@ -9,7 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/blocObserver/myBlocObserver.dart';
 import 'core/cach_helper/cach_helper.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
   Bloc.observer = MyBlocObserver();
@@ -19,25 +19,28 @@ void main() async{
 
 class MyApp extends StatelessWidget {
   AppRouter appRouter;
+  bool isOnboarding = CacheHelper.getData(key: 'onboarding') == null;
+  bool isLoggedIn = CacheHelper.getData(key: 'token') == null;
 
-
-  MyApp(this.appRouter);
+  MyApp(this.appRouter, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(430,932),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context,child) {
-        return MaterialApp(
-          theme: AppTheme.mainTheme,
-          debugShowCheckedModeBanner: false,
-          initialRoute: Routes.splashScreen,
-          onGenerateRoute: appRouter.generateRoute,
-        );
-      }
-    );
+        designSize: const Size(430, 932),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, child) {
+          return MaterialApp(
+            theme: AppTheme.mainTheme,
+            debugShowCheckedModeBanner: false,
+            initialRoute: isOnboarding
+                ? Routes.onboardingScreen
+                : isLoggedIn
+                    ? Routes.loginScreen
+                    : Routes.homePageLayout,
+            onGenerateRoute: appRouter.generateRoute,
+          );
+        });
   }
-
 }

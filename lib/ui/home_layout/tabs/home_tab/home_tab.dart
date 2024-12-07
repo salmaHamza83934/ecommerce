@@ -1,9 +1,8 @@
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce_app/core/theme/app_colors.dart';
 import 'package:ecommerce_app/core/theme/app_text_styles.dart';
-import 'package:ecommerce_app/ui/home_layout/tabs/home_tab/widgets/category_item_shimmer.dart';
-import 'package:ecommerce_app/ui/home_layout/tabs/home_tab/widgets/category_item_widget.dart';
+import 'package:ecommerce_app/ui/home_layout/tabs/home_tab/widgets/category_section_shimmer.dart';
+import 'package:ecommerce_app/ui/home_layout/tabs/home_tab/widgets/category_section_widget.dart';
 import 'package:ecommerce_app/ui/home_layout/tabs/home_tab/widgets/new_arrival_products_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -64,8 +63,8 @@ class HomeTab extends StatelessWidget {
                 height: 16.h,
               ),
               state is AllCategoriesLoadingState
-                  ? const CategoryItemShimmer()
-                  : CategoryItemWidget(),
+                  ? const CategorySectionShimmer()
+                  : const CategorySectionWidget(),
               SizedBox(
                 height: 20.h,
               ),

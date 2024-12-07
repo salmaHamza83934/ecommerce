@@ -12,7 +12,7 @@ import 'cubit/home_screen_view_model.dart';
 
 class HomePageLayout extends StatelessWidget {
 
-  HomePageLayout({super.key});
+  const HomePageLayout({super.key});
 
   @override
   Widget build(BuildContext context) {
