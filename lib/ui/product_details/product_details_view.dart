@@ -13,6 +13,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../dialog_utils.dart';
+
 
 class ProductDetailsView extends StatefulWidget {
    ProductEntity productEntity;
@@ -79,6 +81,9 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                       ),
                       TotalPriceAndAddToCartButton(addToCart: (){
                         BlocProvider.of<CartTabViewModel>(context).addToCart(widget.productEntity.id??'');
+                        if(state is AddToCartSuccessState){
+                          DialogUtils.showMessage(context, title: 'Cart Announcement','Product added to cart!',posActionName: 'Ok');
+                        }
                         Future.delayed((const Duration(seconds: 1)),(){
                           if(counterValue>1){
                             BlocProvider.of<CartTabViewModel>(context).updateCountCart(widget.productEntity.id??'', counterValue);
