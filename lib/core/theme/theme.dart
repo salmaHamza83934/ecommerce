@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 class AppTheme {
   static const primaryColor = AppColors.delftBlue;
   static ThemeData mainTheme = ThemeData(
+    scaffoldBackgroundColor: Colors.white,
       colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
       primaryColor: primaryColor,
       appBarTheme: AppBarTheme(

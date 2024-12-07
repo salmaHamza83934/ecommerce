@@ -1,36 +1,37 @@
 import 'package:ecommerce_app/core/routing/routes_names.dart';
 import 'package:ecommerce_app/ui/cart_screen/cart_screen.dart';
 import 'package:ecommerce_app/ui/cart_screen/cubit/cart_view_model.dart';
-import 'package:ecommerce_app/ui/home_screen/cubit/home_screen_view_model.dart';
-import 'package:ecommerce_app/ui/login/cubit/login_view_model.dart';
-import 'package:ecommerce_app/ui/login/login_view.dart';
+import 'package:ecommerce_app/ui/onboarding_screen/onboarding_screen.dart';
 import 'package:ecommerce_app/ui/product_details/product_details_view.dart';
-import 'package:ecommerce_app/ui/register/cubit/reigister_view_model.dart';
-import 'package:ecommerce_app/ui/register/register_view.dart';
-import 'package:ecommerce_app/ui/tabs/home_tab/cubit/home_tab_view_model.dart';
-import 'package:ecommerce_app/ui/tabs/home_tab/products_by_category_screen.dart';
-import 'package:ecommerce_app/ui/tabs/products_tab/cubit/produts_tab_view_model.dart';
+import 'package:ecommerce_app/ui/register_screen/register_screen.dart';
+import 'package:ecommerce_app/ui/search_screen/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import '../../ui/home_layout/cubit/home_screen_view_model.dart';
+import '../../ui/home_layout/home_page_layout.dart';
+import '../../ui/home_layout/tabs/home_tab/cubit/home_tab_view_model.dart';
+import '../../ui/home_layout/tabs/home_tab/products_by_category_screen.dart';
+import '../../ui/home_layout/tabs/products_tab/cubit/produts_tab_view_model.dart';
+import '../../ui/login_screen/cubit/login_view_model.dart';
+import '../../ui/login_screen/login_screen.dart';
+import '../../ui/register_screen/cubit/register_view_model.dart';
 import '../di.dart';
-import '../../ui/home_screen/home_page_layout.dart';
-import '../../ui/splash_screen/splash_screen.dart';
 
 class AppRouter {
   Route? generateRoute(RouteSettings settings) {
     final args = settings.arguments as Map<String, dynamic>?;
     switch (settings.name) {
-      case Routes.splashScreen:
+
+      case Routes.onboardingScreen:
         return MaterialPageRoute(
-          builder: (_) => const SplashScreen(),
+          builder: (_) => const OnboardingScreen(),
         );
 
       case Routes.loginScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => getIt<LoginScreenViewModel>(),
-            child: const LoginView(),
+            child: const LoginScreen(),
           ),
         );
 
@@ -38,7 +39,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => getIt<RegisterScreenViewModel>(),
-            child: const RegisterView(),
+            child: const RegisterScreen(),
           ),
         );
 
@@ -63,14 +64,21 @@ class AppRouter {
                 create: (context) => getIt<CartTabViewModel>()..getCartItems(),
               ),
             ],
-            child: HomePageLayout(),
+            child: const HomePageLayout(),
           ),
         );
 
       case Routes.productDetailsScreen:
         return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => getIt<CartTabViewModel>(),
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => getIt<CartTabViewModel>(),
+              ),
+              BlocProvider(
+                create: (context) => getIt<ProductsTabViewModel>()..getWishlist(),
+              ),
+            ],
             child: ProductDetailsView(args?['products']),
           ),
         );
@@ -79,10 +87,23 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => getIt<CartTabViewModel>()..getCartItems(),
-            child: CartScreen(),
+            child: const CartScreen(),
           ),
         );
-
+      case Routes.searchView:
+        return MaterialPageRoute(
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => getIt<ProductsTabViewModel>(),
+              ),
+              BlocProvider(
+                create: (context) => getIt<CartTabViewModel>()..getCartItems(),
+              ),
+            ],
+            child: SearchScreen(),
+          ),
+        );
       case Routes.productsByCategoryScreen:
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
@@ -95,7 +116,8 @@ class AppRouter {
                   ..getProductByCategoryId(args?['category_id']),
               ),
               BlocProvider(
-              create: (context) => getIt<CartTabViewModel>(),)
+                create: (context) => getIt<CartTabViewModel>(),
+              )
             ],
             child: ProductsByCategoryScreen(args?['category_id']),
           ),

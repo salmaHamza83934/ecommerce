@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheHelper
@@ -36,6 +37,11 @@ class CacheHelper
     return await sharedPreferences.remove(key);
   }
 
+
+  static Future<void> clearAllData() async {
+    debugPrint('SharedPrefHelper : all data has been cleared');
+    await sharedPreferences.clear();
+  }
 
 
 }

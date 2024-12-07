@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -42,9 +43,14 @@ class CartItem extends StatelessWidget {
                     if (loadingProgress == null) {
                       return child;
                     } else {
-                      return const Center(
-                        child: CircularProgressIndicator(
-                          color: AppColors.magentaDye,
+                      return Shimmer.fromColors(
+                        baseColor: Colors.grey[300]!,
+                        highlightColor: Colors.grey[100]!,
+                        child: Container(
+                          height: 120.h,
+                          width: 110.w,
+                          color: Colors.grey[
+                          300], // Provide a color to visualize shimmer effect.
                         ),
                       );
                     }
