@@ -1,4 +1,3 @@
-import 'package:ecommerce_app/domain/entities/GetWishlistResponseEntity.dart';
 import 'package:ecommerce_app/domain/entities/ProductsResponseEntity.dart';
 import 'package:ecommerce_app/domain/use_cases/get_products_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

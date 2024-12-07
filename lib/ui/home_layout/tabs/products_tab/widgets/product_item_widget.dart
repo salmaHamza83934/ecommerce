@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/core/theme/app_text_styles.dart';
 import 'package:ecommerce_app/ui/cart_screen/cubit/cart_states.dart';
 import 'package:ecommerce_app/ui/cart_screen/cubit/cart_view_model.dart';
+import 'package:ecommerce_app/ui/dialog_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -118,6 +119,9 @@ class ProductItemWidget extends StatelessWidget {
                       onTap: () {
                         BlocProvider.of<CartTabViewModel>(context)
                             .addToCart(product.id ?? '');
+                        if(state is AddToCartSuccessState){
+                          DialogUtils.showMessage(context, title: 'Cart Announcement','Product added to cart!',posActionName: 'Ok');
+                        }
                       },
                       child: Container(
                         width: 40.w,

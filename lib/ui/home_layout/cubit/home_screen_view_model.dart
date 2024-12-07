@@ -12,8 +12,8 @@ static HomeScreenViewModel get(context)=>BlocProvider.of(context);
   int selectedIndex = 0;
   List<Widget> tabs = [
     HomeTab(),
-    ProductListTab(),
-    WishlistTab(),
+    const ProductListTab(),
+    const WishlistTab(),
     const ProfileTab()
   ];
   void changeBottomNavigationBar(int newSelectedIndex){

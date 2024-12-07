@@ -1,5 +1,4 @@
 import 'package:ecommerce_app/domain/entities/AddRemoveWishlistResponseEntity.dart';
-import 'package:ecommerce_app/domain/entities/AddToCartEntity.dart';
 import 'package:ecommerce_app/domain/entities/GetWishlistResponseEntity.dart';
 import 'package:ecommerce_app/domain/entities/ProductsResponseEntity.dart';
 
@@ -31,24 +30,6 @@ class AllProductsSuccessState extends ProductsTabStates {
   SearchProductSuccess(this.productEntity);
 }class SearchProductLoading extends ProductsTabStates {
 
-}
-
-class AddToCartLoadingState extends ProductsTabStates {
-  String loadingMsg;
-
-  AddToCartLoadingState(this.loadingMsg);
-}
-
-class AddToCartErrorState extends ProductsTabStates {
-  BaseError error;
-
-  AddToCartErrorState(this.error);
-}
-
-class AddToCartSuccessState extends ProductsTabStates {
-  AddToCartResponseEntity addToCartResponseEntity;
-
-  AddToCartSuccessState(this.addToCartResponseEntity);
 }
 
 class AddToWishlistSuccessState extends ProductsTabStates{

@@ -29,4 +29,9 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     color: Colors.white,
   );
+  static TextStyle font14DelfBlue = GoogleFonts.poppins(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.delftBlue,
+  );
 }

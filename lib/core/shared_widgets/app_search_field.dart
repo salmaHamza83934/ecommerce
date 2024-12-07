@@ -1,4 +1,3 @@
-import 'package:ecommerce_app/core/asset_data/assets_img.dart';
 import 'package:ecommerce_app/core/routing/routes_names.dart';
 import 'package:ecommerce_app/core/theme/app_colors.dart';
 import 'package:ecommerce_app/core/theme/app_text_styles.dart';

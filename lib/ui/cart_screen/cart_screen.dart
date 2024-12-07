@@ -1,4 +1,3 @@
-import 'package:ecommerce_app/core/di.dart';
 import 'package:ecommerce_app/core/theme/app_colors.dart';
 import 'package:ecommerce_app/core/theme/app_text_styles.dart';
 import 'package:ecommerce_app/ui/cart_screen/cubit/cart_states.dart';
@@ -14,7 +13,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class CartScreen extends StatelessWidget {
 
 
-  CartScreen({super.key});
+  const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

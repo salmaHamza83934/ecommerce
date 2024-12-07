@@ -9,7 +9,7 @@ class NewArrivalProductsSection extends StatelessWidget {
   bool isLoading;
 
 
-  NewArrivalProductsSection(this.isLoading);
+  NewArrivalProductsSection(this.isLoading, {super.key});
 
   @override
   Widget build(BuildContext context) {

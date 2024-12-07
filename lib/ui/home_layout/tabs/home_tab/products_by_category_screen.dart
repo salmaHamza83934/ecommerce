@@ -1,8 +1,8 @@
-import 'package:ecommerce_app/core/asset_data/assets_img.dart';
 import 'package:ecommerce_app/core/routing/routes_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../products_tab/widgets/product_item_widget.dart';
@@ -13,7 +13,7 @@ class ProductsByCategoryScreen extends StatelessWidget {
 
   String categoryId;
 
-  ProductsByCategoryScreen(this.categoryId);
+  ProductsByCategoryScreen(this.categoryId, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,19 +25,14 @@ class ProductsByCategoryScreen extends StatelessWidget {
               title: const Text('Products'),
               actions: [
                 InkWell(
-                  onTap: () {
+                  onTap: (){
                     Navigator.pushNamed(context, Routes.cartScreen);
                   },
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(
-                      AssetImages.shoppingCart,
-                      height: 30.h,
-                      width: 30.w,
-                    ),
+                      padding:  EdgeInsets.symmetric(horizontal: 16.w),
+                      child: const Icon(FontAwesomeIcons.cartShopping)
                   ),
-                ),
-              ],
+                ),              ],
             ),
             body: state is CategoryProductsLoadingState
                 ? Center(
